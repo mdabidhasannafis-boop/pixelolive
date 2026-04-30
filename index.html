@@ -3,261 +3,872 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>PixelOlive — Web Build & Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  :root{
-    --white:#ffffff;
-    --olive:#6B7C3A;
-    --olive-light:#8A9E4A;
-    --olive-dark:#4A5628;
-    --olive-pale:#EFF2E6;
-    --olive-mid:#D4DDB8;
-    --text-dark:#1a1f0e;
-    --text-gray:#5a6347;
-  }
-  body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text-dark);overflow-x:hidden;}
-  
-  nav{background:var(--white);border-bottom:1px solid var(--olive-mid);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;}
-  .logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--olive-dark);letter-spacing:-0.5px;}
-  .logo span{color:var(--olive-light);}
-  .nav-links{display:flex;gap:32px;list-style:none;}
-  .nav-links a{text-decoration:none;color:var(--text-gray);font-size:14px;font-weight:500;transition:color 0.2s;}
-  .nav-links a:hover{color:var(--olive);}
-  .nav-cta{background:var(--olive);color:var(--white);padding:10px 24px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:500;transition:background 0.2s;}
-  .nav-cta:hover{background:var(--olive-dark);}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --white:#ffffff;
+  --olive:#6B7C3A;
+  --olive-light:#8A9E4A;
+  --olive-dark:#4A5628;
+  --olive-pale:#EFF2E6;
+  --olive-mid:#D4DDB8;
+  --text-dark:#1a1f0e;
+  --text-gray:#5a6347;
+  --shadow:0 8px 40px rgba(107,124,58,0.13);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text-dark);overflow-x:hidden;}
+.page{display:none;animation:fadeIn 0.35s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
 
-  .hero{background:var(--olive-pale);padding:100px 5% 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-  .hero-badge{display:inline-block;background:var(--olive-mid);color:var(--olive-dark);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:20px;}
-  .hero h1{font-family:'Playfair Display',serif;font-size:52px;line-height:1.15;color:var(--text-dark);margin-bottom:20px;}
-  .hero h1 em{color:var(--olive);font-style:normal;}
-  .hero p{color:var(--text-gray);font-size:17px;line-height:1.7;margin-bottom:36px;font-weight:300;}
-  .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
-  .btn-primary{background:var(--olive);color:var(--white);padding:14px 30px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:500;transition:background 0.2s;}
-  .btn-primary:hover{background:var(--olive-dark);}
-  .btn-secondary{background:var(--white);color:var(--olive);border:1.5px solid var(--olive);padding:13px 28px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s;}
-  .btn-secondary:hover{background:var(--olive);color:var(--white);}
-  .hero-visual{background:var(--white);border-radius:16px;border:1px solid var(--olive-mid);padding:32px;box-shadow:0 8px 40px rgba(107,124,58,0.12);}
-  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-  .stat-card{background:var(--olive-pale);border-radius:10px;padding:16px;text-align:center;}
-  .stat-num{font-family:'Playfair Display',serif;font-size:30px;color:var(--olive-dark);font-weight:700;}
-  .stat-lbl{font-size:12px;color:var(--text-gray);margin-top:2px;}
-  .mock-bar{height:6px;border-radius:4px;background:var(--olive-mid);margin-bottom:8px;}
-  .mock-bar.fill-80{width:80%;background:var(--olive-light);}
-  .mock-bar.fill-60{width:60%;background:var(--olive);}
-  .mock-bar.fill-90{width:90%;background:var(--olive-dark);}
-  .mock-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-gray);margin-bottom:4px;}
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--olive-mid);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:200;}
+.logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--olive-dark);letter-spacing:-0.5px;cursor:pointer;}
+.logo span{color:var(--olive-light);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--text-gray);font-size:14px;font-weight:500;transition:color 0.2s;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent;}
+.nav-links a:hover,.nav-links a.active-nav{color:var(--olive);border-bottom-color:var(--olive);}
+.nav-cta{background:var(--olive);color:var(--white);padding:10px 24px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:background 0.2s;font-family:'DM Sans',sans-serif;}
+.nav-cta:hover{background:var(--olive-dark);}
 
-  .services{padding:90px 5%;background:var(--white);}
-  .section-tag{display:inline-block;background:var(--olive-pale);color:var(--olive);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:14px;}
-  .section-title{font-family:'Playfair Display',serif;font-size:40px;color:var(--text-dark);margin-bottom:12px;}
-  .section-sub{color:var(--text-gray);font-size:16px;max-width:500px;line-height:1.6;margin-bottom:50px;}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .card{background:var(--white);border:1px solid var(--olive-mid);border-radius:14px;padding:32px;transition:all 0.25s;cursor:default;}
-  .card:hover{border-color:var(--olive);box-shadow:0 8px 32px rgba(107,124,58,0.12);transform:translateY(-3px);}
-  .card-icon{width:48px;height:48px;background:var(--olive-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:22px;}
-  .card h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:10px;}
-  .card p{color:var(--text-gray);font-size:14px;line-height:1.65;}
-  .card-list{margin-top:16px;list-style:none;}
-  .card-list li{font-size:13px;color:var(--text-gray);padding:4px 0;padding-left:14px;position:relative;}
-  .card-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--olive-light);}
+/* BUTTONS */
+.btn{display:inline-block;padding:13px 28px;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-primary{background:var(--olive);color:var(--white);}
+.btn-primary:hover{background:var(--olive-dark);}
+.btn-secondary{background:var(--white);color:var(--olive);border:1.5px solid var(--olive);}
+.btn-secondary:hover{background:var(--olive);color:var(--white);}
+.btn-white{background:var(--white);color:var(--olive-dark);}
+.btn-white:hover{background:var(--olive-pale);}
+.btn-outline-white{border:1.5px solid rgba(255,255,255,0.5);color:var(--white);background:transparent;}
+.btn-outline-white:hover{background:rgba(255,255,255,0.12);}
 
-  .process{padding:90px 5%;background:var(--olive-pale);}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:50px;}
-  .steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1px;background:var(--olive-mid);z-index:0;}
-  .step{text-align:center;position:relative;z-index:1;padding:0 16px;}
-  .step-num{width:56px;height:56px;background:var(--olive);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:var(--white);font-weight:700;margin:0 auto 16px;}
-  .step h4{font-family:'Playfair Display',serif;font-size:17px;color:var(--text-dark);margin-bottom:8px;}
-  .step p{font-size:13px;color:var(--text-gray);line-height:1.6;}
+/* SHARED */
+.section-tag{display:inline-block;background:var(--olive-pale);color:var(--olive);font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:14px;}
+.section-title{font-family:'Playfair Display',serif;font-size:40px;color:var(--text-dark);margin-bottom:12px;line-height:1.2;}
+.section-sub{color:var(--text-gray);font-size:16px;line-height:1.65;margin-bottom:50px;}
+.page-hero{background:var(--olive-pale);padding:70px 5% 60px;text-align:center;}
+.page-hero .section-title{font-size:46px;}
+.page-hero p{color:var(--text-gray);font-size:17px;max-width:560px;margin:0 auto 32px;line-height:1.7;}
 
-  .pricing{padding:90px 5%;background:var(--white);}
-  .pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
-  .p-card{border:1px solid var(--olive-mid);border-radius:14px;padding:36px 28px;transition:all 0.25s;}
-  .p-card.featured{border:2px solid var(--olive);background:var(--olive-pale);}
-  .p-tag{font-size:11px;font-weight:500;color:var(--olive);background:var(--olive-mid);padding:4px 10px;border-radius:12px;display:inline-block;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;}
-  .p-name{font-family:'Playfair Display',serif;font-size:22px;color:var(--text-dark);margin-bottom:8px;}
-  .p-price{font-size:40px;font-weight:700;color:var(--olive-dark);font-family:'Playfair Display',serif;line-height:1;}
-  .p-price span{font-size:16px;color:var(--text-gray);font-weight:400;font-family:'DM Sans',sans-serif;}
-  .p-divider{height:1px;background:var(--olive-mid);margin:20px 0;}
-  .p-features{list-style:none;}
-  .p-features li{font-size:14px;color:var(--text-gray);padding:6px 0;padding-left:20px;position:relative;}
-  .p-features li::before{content:'✓';position:absolute;left:0;color:var(--olive);font-weight:700;font-size:12px;}
-  .p-btn{display:block;text-align:center;margin-top:28px;padding:13px;border-radius:8px;text-decoration:none;font-weight:500;font-size:14px;transition:all 0.2s;}
-  .p-btn.outline{border:1.5px solid var(--olive);color:var(--olive);}
-  .p-btn.outline:hover{background:var(--olive);color:var(--white);}
-  .p-btn.solid{background:var(--olive);color:var(--white);}
-  .p-btn.solid:hover{background:var(--olive-dark);}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--white);border-radius:20px;padding:44px;max-width:400px;width:90%;text-align:center;position:relative;animation:fadeUp 0.3s ease;}
+.modal-close{position:absolute;top:16px;right:20px;font-size:22px;cursor:pointer;color:var(--text-gray);background:none;border:none;font-family:'DM Sans',sans-serif;}
+.modal-box .phone-icon{font-size:52px;margin-bottom:16px;}
+.modal-box h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--text-dark);margin-bottom:8px;}
+.modal-box p{color:var(--text-gray);font-size:14px;margin-bottom:24px;line-height:1.6;}
+.modal-phone{font-family:'Playfair Display',serif;font-size:28px;color:var(--olive-dark);font-weight:700;margin-bottom:28px;letter-spacing:1px;}
+.modal-box .btn-primary{width:100%;display:block;text-align:center;font-size:16px;padding:15px;}
 
-  .testimonials{padding:90px 5%;background:var(--olive-pale);}
-  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px;}
-  .t-card{background:var(--white);border-radius:14px;padding:28px;border:1px solid var(--olive-mid);}
-  .t-stars{color:var(--olive);font-size:14px;margin-bottom:12px;letter-spacing:2px;}
-  .t-card blockquote{font-size:14px;color:var(--text-gray);line-height:1.7;margin-bottom:20px;font-style:italic;}
-  .t-author{display:flex;align-items:center;gap:10px;}
-  .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--olive);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:13px;font-weight:500;}
-  .t-name{font-size:13px;font-weight:500;color:var(--text-dark);}
-  .t-role{font-size:12px;color:var(--text-gray);}
+/* ============ HOME PAGE ============ */
+.hero{background:var(--olive-pale);padding:100px 5% 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--olive);color:var(--white);font-size:12px;font-weight:500;padding:7px 16px;border-radius:20px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:22px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:50px;line-height:1.15;color:var(--text-dark);margin-bottom:0;}
+.hero h1 em{color:var(--olive);font-style:normal;display:block;}
+.hero-desc{margin:20px 0 34px;}
+.hero-desc .lead{font-size:17px;color:var(--text-dark);font-weight:500;line-height:1.55;margin-bottom:10px;}
+.hero-desc .sub{font-size:15px;color:var(--text-gray);line-height:1.75;font-weight:300;}
+.hero-desc .sub strong{color:var(--olive);font-weight:500;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.pill{background:var(--white);border:1px solid var(--olive-mid);color:var(--olive-dark);font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-visual{background:var(--white);border-radius:16px;border:1px solid var(--olive-mid);padding:32px;box-shadow:var(--shadow);}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.stat-card{background:var(--olive-pale);border-radius:10px;padding:16px;text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:30px;color:var(--olive-dark);font-weight:700;}
+.stat-lbl{font-size:12px;color:var(--text-gray);margin-top:2px;}
+.mock-bar{height:6px;border-radius:4px;background:var(--olive-mid);margin-bottom:8px;}
+.mock-bar.fill-80{width:80%;background:var(--olive-light);}
+.mock-bar.fill-60{width:60%;background:var(--olive);}
+.mock-bar.fill-90{width:90%;background:var(--olive-dark);}
+.mock-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-gray);margin-bottom:4px;}
 
-  .cta-section{background:var(--olive-dark);padding:90px 5%;text-align:center;}
-  .cta-section h2{font-family:'Playfair Display',serif;font-size:44px;color:var(--white);margin-bottom:16px;}
-  .cta-section p{color:rgba(255,255,255,0.75);font-size:17px;margin-bottom:36px;}
-  .cta-btns{display:flex;gap:14px;justify-content:center;}
-  .btn-white{background:var(--white);color:var(--olive-dark);padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:500;font-size:15px;transition:all 0.2s;}
-  .btn-white:hover{background:var(--olive-pale);}
-  .btn-outline-white{border:1.5px solid rgba(255,255,255,0.5);color:var(--white);padding:13px 30px;border-radius:8px;text-decoration:none;font-weight:500;font-size:15px;transition:all 0.2s;}
-  .btn-outline-white:hover{background:rgba(255,255,255,0.1);}
+/* HOME SERVICES PREVIEW */
+.home-services{padding:90px 5%;background:var(--white);}
+.service-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.service-card{background:var(--white);border:1px solid var(--olive-mid);border-radius:14px;padding:32px;transition:all 0.25s;cursor:pointer;}
+.service-card:hover{border-color:var(--olive);box-shadow:var(--shadow);transform:translateY(-4px);}
+.scard-icon{width:52px;height:52px;background:var(--olive-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:24px;}
+.service-card h3{font-family:'Playfair Display',serif;font-size:21px;color:var(--text-dark);margin-bottom:10px;}
+.service-card p{color:var(--text-gray);font-size:14px;line-height:1.65;margin-bottom:16px;}
+.card-list{list-style:none;}
+.card-list li{font-size:13px;color:var(--text-gray);padding:4px 0 4px 16px;position:relative;}
+.card-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--olive-light);}
+.scard-arrow{display:inline-flex;align-items:center;gap:6px;color:var(--olive);font-size:13px;font-weight:600;margin-top:16px;}
 
-  footer{background:var(--text-dark);padding:60px 5% 30px;}
-  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
-  .footer-brand .logo{color:var(--white);}
-  .footer-brand p{color:rgba(255,255,255,0.5);font-size:13px;line-height:1.7;margin-top:12px;max-width:240px;}
-  .footer-col h5{color:var(--olive-light);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
-  .footer-col ul{list-style:none;}
-  .footer-col li{margin-bottom:8px;}
-  .footer-col a{color:rgba(255,255,255,0.55);text-decoration:none;font-size:13px;transition:color 0.2s;}
-  .footer-col a:hover{color:var(--olive-light);}
-  .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
-  .footer-bottom p{color:rgba(255,255,255,0.35);font-size:12px;}
+/* HOME PROCESS */
+.home-process{padding:90px 5%;background:var(--olive-pale);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:50px;}
+.steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1px;background:var(--olive-mid);z-index:0;}
+.step{text-align:center;position:relative;z-index:1;padding:0 16px;}
+.step-num{width:56px;height:56px;background:var(--olive);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;color:var(--white);font-weight:700;margin:0 auto 16px;}
+.step h4{font-family:'Playfair Display',serif;font-size:17px;color:var(--text-dark);margin-bottom:8px;}
+.step p{font-size:13px;color:var(--text-gray);line-height:1.6;}
 
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-  .hero h1,.hero p,.hero-btns{animation:fadeUp 0.7s ease both;}
-  .hero p{animation-delay:0.1s;}
-  .hero-btns{animation-delay:0.2s;}
+/* HOME PRICING PREVIEW */
+.home-pricing{padding:90px 5%;background:var(--white);}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+.p-card{border:1px solid var(--olive-mid);border-radius:14px;padding:36px 28px;transition:all 0.25s;cursor:pointer;}
+.p-card:hover{border-color:var(--olive);box-shadow:var(--shadow);}
+.p-card.featured{border:2px solid var(--olive);background:var(--olive-pale);}
+.p-tag{font-size:11px;font-weight:500;color:var(--olive);background:var(--olive-mid);padding:4px 10px;border-radius:12px;display:inline-block;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;}
+.p-name{font-family:'Playfair Display',serif;font-size:22px;color:var(--text-dark);margin-bottom:8px;}
+.p-price{font-size:40px;font-weight:700;color:var(--olive-dark);font-family:'Playfair Display',serif;line-height:1;}
+.p-price span{font-size:16px;color:var(--text-gray);font-weight:400;font-family:'DM Sans',sans-serif;}
+.p-divider{height:1px;background:var(--olive-mid);margin:20px 0;}
+.p-features{list-style:none;}
+.p-features li{font-size:14px;color:var(--text-gray);padding:6px 0;padding-left:20px;position:relative;}
+.p-features li::before{content:'✓';position:absolute;left:0;color:var(--olive);font-weight:700;font-size:12px;}
+.p-btn{display:block;text-align:center;margin-top:28px;padding:13px;border-radius:8px;font-weight:500;font-size:14px;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;width:100%;}
+.p-btn.outline{border:1.5px solid var(--olive);color:var(--olive);background:transparent;}
+.p-btn.outline:hover{background:var(--olive);color:var(--white);}
+.p-btn.solid{background:var(--olive);color:var(--white);}
+.p-btn.solid:hover{background:var(--olive-dark);}
+
+/* HOME TESTIMONIALS */
+.home-testimonials{padding:90px 5%;background:var(--olive-pale);}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px;}
+.t-card{background:var(--white);border-radius:14px;padding:28px;border:1px solid var(--olive-mid);}
+.t-stars{color:var(--olive);font-size:14px;margin-bottom:12px;letter-spacing:2px;}
+.t-card blockquote{font-size:14px;color:var(--text-gray);line-height:1.7;margin-bottom:20px;font-style:italic;}
+.t-author{display:flex;align-items:center;gap:10px;}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:var(--olive);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:13px;font-weight:500;}
+.t-name{font-size:13px;font-weight:500;color:var(--text-dark);}
+.t-role{font-size:12px;color:var(--text-gray);}
+
+/* CTA SECTION */
+.cta-section{background:var(--olive-dark);padding:90px 5%;text-align:center;}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:44px;color:var(--white);margin-bottom:16px;}
+.cta-section p{color:rgba(255,255,255,0.75);font-size:17px;margin-bottom:36px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:var(--text-dark);padding:60px 5% 30px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand .logo{color:var(--white);}
+.footer-brand p{color:rgba(255,255,255,0.5);font-size:13px;line-height:1.7;margin-top:12px;max-width:240px;}
+.footer-col h5{color:var(--olive-light);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:8px;}
+.footer-col a{color:rgba(255,255,255,0.55);text-decoration:none;font-size:13px;transition:color 0.2s;cursor:pointer;}
+.footer-col a:hover{color:var(--olive-light);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{color:rgba(255,255,255,0.35);font-size:12px;}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{color:rgba(255,255,255,0.45);font-size:12px;text-decoration:none;cursor:pointer;transition:color 0.2s;}
+.footer-bottom-links a:hover{color:var(--olive-light);}
+
+/* ============ SERVICES PAGE ============ */
+.services-grid{padding:80px 5%;background:var(--white);}
+.srv-full-card{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:60px 0;border-bottom:1px solid var(--olive-mid);}
+.srv-full-card:last-child{border-bottom:none;}
+.srv-full-card.reverse{direction:rtl;}
+.srv-full-card.reverse>*{direction:ltr;}
+.srv-big-icon{width:100px;height:100px;background:var(--olive-pale);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:24px;}
+.srv-full-card h2{font-family:'Playfair Display',serif;font-size:34px;color:var(--text-dark);margin-bottom:14px;}
+.srv-full-card p{color:var(--text-gray);font-size:15px;line-height:1.75;margin-bottom:20px;}
+.srv-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.srv-tag{background:var(--olive-pale);color:var(--olive-dark);font-size:12px;padding:5px 12px;border-radius:16px;font-weight:500;}
+.srv-img-mock{background:var(--olive-pale);border-radius:20px;height:320px;display:flex;align-items:center;justify-content:center;font-size:80px;border:1px solid var(--olive-mid);}
+.why-us{padding:80px 5%;background:var(--olive-pale);}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px;}
+.why-card{background:var(--white);border-radius:14px;padding:28px;border:1px solid var(--olive-mid);}
+.why-card .icon{font-size:32px;margin-bottom:14px;}
+.why-card h4{font-family:'Playfair Display',serif;font-size:17px;color:var(--text-dark);margin-bottom:8px;}
+.why-card p{font-size:13px;color:var(--text-gray);line-height:1.6;}
+
+/* ============ SERVICE DETAIL PAGE ============ */
+.sd-hero{background:var(--olive-pale);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.sd-hero .big-icon{font-size:64px;background:var(--white);border-radius:20px;width:110px;height:110px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;border:1px solid var(--olive-mid);}
+.sd-hero h1{font-family:'Playfair Display',serif;font-size:46px;line-height:1.15;color:var(--text-dark);margin-bottom:16px;}
+.sd-hero p{color:var(--text-gray);font-size:16px;line-height:1.75;margin-bottom:28px;}
+.sd-features{padding:80px 5%;background:var(--white);}
+.sd-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+.sd-feat-card{border:1px solid var(--olive-mid);border-radius:14px;padding:28px;}
+.sd-feat-card .fi{font-size:28px;margin-bottom:12px;}
+.sd-feat-card h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:8px;}
+.sd-feat-card p{font-size:13px;color:var(--text-gray);line-height:1.65;}
+.sd-process{padding:80px 5%;background:var(--olive-pale);}
+.sd-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px;}
+.sd-step{background:var(--white);border-radius:14px;padding:28px;display:flex;gap:16px;align-items:flex-start;}
+.sd-step-num{width:44px;height:44px;background:var(--olive);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Playfair Display',serif;font-size:18px;font-weight:700;flex-shrink:0;}
+.sd-step h4{font-family:'Playfair Display',serif;font-size:17px;color:var(--text-dark);margin-bottom:6px;}
+.sd-step p{font-size:13px;color:var(--text-gray);line-height:1.6;}
+.sd-mock{background:var(--white);border-radius:20px;border:1px solid var(--olive-mid);padding:24px;height:320px;display:flex;flex-direction:column;gap:12px;justify-content:center;align-items:center;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--olive);font-size:14px;font-weight:500;cursor:pointer;margin-bottom:28px;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.back-btn:hover{color:var(--olive-dark);}
+
+/* ============ PORTFOLIO PAGE ============ */
+.portfolio-page{padding:80px 5%;background:var(--white);}
+.port-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;}
+.port-filter{padding:8px 20px;border-radius:20px;border:1.5px solid var(--olive-mid);color:var(--text-gray);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;background:var(--white);}
+.port-filter.active,.port-filter:hover{background:var(--olive);border-color:var(--olive);color:var(--white);}
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.port-item{border-radius:16px;overflow:hidden;border:1px solid var(--olive-mid);cursor:pointer;transition:all 0.25s;}
+.port-item:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--olive);}
+.port-img{height:200px;display:flex;align-items:center;justify-content:center;font-size:56px;}
+.port-info{padding:20px;}
+.port-info h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:6px;}
+.port-info p{font-size:13px;color:var(--text-gray);line-height:1.5;margin-bottom:10px;}
+.port-tag{background:var(--olive-pale);color:var(--olive);font-size:11px;padding:3px 10px;border-radius:10px;font-weight:500;}
+.port-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--olive-pale);border-radius:16px;margin:60px 0 0;overflow:hidden;}
+.pstat{padding:32px;text-align:center;border-right:1px solid var(--olive-mid);}
+.pstat:last-child{border-right:none;}
+.pstat .num{font-family:'Playfair Display',serif;font-size:36px;color:var(--olive-dark);font-weight:700;}
+.pstat .lbl{font-size:13px;color:var(--text-gray);margin-top:4px;}
+
+/* ============ PRICING PAGE ============ */
+.pricing-page{padding:80px 5%;background:var(--white);}
+.pricing-page .pricing-cards{margin-top:0;}
+.pricing-compare{padding:80px 5%;background:var(--olive-pale);}
+.compare-table{width:100%;border-collapse:collapse;margin-top:40px;background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--olive-mid);}
+.compare-table th{background:var(--olive);color:var(--white);font-size:13px;padding:16px;text-align:left;font-weight:500;}
+.compare-table th:first-child{background:var(--olive-dark);}
+.compare-table td{padding:14px 16px;font-size:14px;color:var(--text-gray);border-bottom:1px solid var(--olive-pale);}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table td:first-child{font-weight:500;color:var(--text-dark);}
+.check{color:var(--olive);font-weight:700;}
+.cross{color:#ccc;}
+.faq-section{padding:80px 5%;background:var(--white);}
+.faq-list{max-width:700px;margin:40px auto 0;}
+.faq-item{border:1px solid var(--olive-mid);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.faq-q{padding:18px 22px;font-size:15px;font-weight:500;color:var(--text-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.faq-q:hover{background:var(--olive-pale);}
+.faq-a{padding:0 22px;font-size:14px;color:var(--text-gray);line-height:1.7;max-height:0;overflow:hidden;transition:all 0.3s;background:var(--olive-pale);}
+.faq-a.open{max-height:200px;padding:16px 22px;}
+
+/* ============ PAYMENT PAGE ============ */
+.payment-page{padding:80px 5%;background:var(--white);display:grid;grid-template-columns:1fr 1.4fr;gap:60px;min-height:80vh;}
+.payment-summary{background:var(--olive-pale);border-radius:20px;padding:36px;height:fit-content;position:sticky;top:100px;}
+.payment-summary h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--text-dark);margin-bottom:24px;}
+.pay-plan-name{font-family:'Playfair Display',serif;font-size:28px;color:var(--olive-dark);margin-bottom:4px;}
+.pay-plan-price{font-size:44px;font-weight:700;color:var(--text-dark);font-family:'Playfair Display',serif;margin-bottom:20px;}
+.pay-plan-price span{font-size:16px;color:var(--text-gray);font-weight:400;font-family:'DM Sans',sans-serif;}
+.pay-features{list-style:none;margin-bottom:28px;}
+.pay-features li{font-size:14px;color:var(--text-gray);padding:7px 0;padding-left:20px;position:relative;border-bottom:1px solid var(--olive-mid);}
+.pay-features li:last-child{border-bottom:none;}
+.pay-features li::before{content:'✓';position:absolute;left:0;color:var(--olive);font-weight:700;}
+.payment-form{padding:8px 0;}
+.payment-form h2{font-family:'Playfair Display',serif;font-size:32px;color:var(--text-dark);margin-bottom:8px;}
+.payment-form .sub{color:var(--text-gray);font-size:15px;margin-bottom:36px;line-height:1.6;}
+.form-section{background:var(--white);border:1px solid var(--olive-mid);border-radius:16px;padding:28px;margin-bottom:20px;}
+.form-section h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--olive-pale);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-row.full{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:13px;font-weight:500;color:var(--text-dark);}
+.form-group input,.form-group select,.form-group textarea{padding:12px 14px;border:1.5px solid var(--olive-mid);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border 0.2s;background:var(--white);}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--olive);}
+
+/* PAYMENT METHOD SELECTOR */
+.payment-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.pay-method{border:2px solid var(--olive-mid);border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white);}
+.pay-method:hover{border-color:var(--olive);background:var(--olive-pale);}
+.pay-method.selected{border-color:var(--olive);background:var(--olive-pale);box-shadow:0 0 0 3px rgba(107,124,58,0.12);}
+.pay-method .icon{font-size:28px;margin-bottom:6px;}
+.pay-method .lbl{font-size:12px;font-weight:600;color:var(--text-dark);}
+.pay-method.selected .lbl{color:var(--olive-dark);}
+
+/* PAYMENT FORM BLOCKS */
+.pay-form-block{display:none;animation:fadeIn 0.3s ease;}
+.pay-form-block.active{display:block;}
+
+/* TOTAL */
+.pay-total{background:var(--olive-dark);color:var(--white);border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.pay-total .label{font-size:14px;opacity:0.8;}
+.pay-total .amount{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;}
+.pay-submit{width:100%;padding:16px;background:var(--olive);color:var(--white);border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;}
+.pay-submit:hover{background:var(--olive-dark);}
+.pay-secure{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12px;color:var(--text-gray);}
+
+/* ============ CONTACT PAGE ============ */
+.contact-page{padding:80px 5%;background:var(--white);display:grid;grid-template-columns:1fr 1.5fr;gap:60px;}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:36px;color:var(--text-dark);margin-bottom:14px;}
+.contact-info p{color:var(--text-gray);font-size:15px;line-height:1.75;margin-bottom:36px;}
+.contact-items{display:flex;flex-direction:column;gap:20px;margin-bottom:36px;}
+.ci-item{display:flex;gap:14px;align-items:flex-start;}
+.ci-icon{width:44px;height:44px;background:var(--olive-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.ci-label{font-size:12px;font-weight:500;color:var(--text-gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.ci-value{font-size:15px;color:var(--text-dark);font-weight:500;}
+.social-links{display:flex;gap:12px;}
+.social-link{width:40px;height:40px;background:var(--olive-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+.social-link:hover{background:var(--olive);transform:translateY(-2px);}
+.contact-form-box{background:var(--olive-pale);border-radius:20px;padding:40px;}
+.contact-form-box h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--text-dark);margin-bottom:28px;}
+.cf-group{margin-bottom:18px;}
+.cf-group label{display:block;font-size:13px;font-weight:500;color:var(--text-dark);margin-bottom:6px;}
+.cf-group input,.cf-group textarea,.cf-group select{width:100%;padding:12px 14px;border:1.5px solid var(--olive-mid);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:var(--white);transition:border 0.2s;}
+.cf-group input:focus,.cf-group textarea:focus,.cf-group select:focus{border-color:var(--olive);}
+.cf-group textarea{resize:vertical;min-height:120px;}
+.cf-submit{width:100%;padding:14px;background:var(--olive);color:var(--white);border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;}
+.cf-submit:hover{background:var(--olive-dark);}
+.map-section{padding:0 5% 80px;background:var(--white);}
+.map-box{background:var(--olive-pale);border-radius:20px;height:260px;display:flex;align-items:center;justify-content:center;border:1px solid var(--olive-mid);font-size:14px;color:var(--text-gray);}
+
+/* ============ QUOTE PAGE ============ */
+.quote-page{padding:80px 5%;background:var(--white);display:grid;grid-template-columns:1fr 1.5fr;gap:60px;min-height:80vh;}
+.quote-info{height:fit-content;position:sticky;top:100px;}
+.quote-info h2{font-family:'Playfair Display',serif;font-size:36px;color:var(--text-dark);margin-bottom:14px;}
+.quote-info p{color:var(--text-gray);font-size:15px;line-height:1.75;margin-bottom:32px;}
+.quote-benefits{display:flex;flex-direction:column;gap:16px;}
+.qb{display:flex;gap:12px;align-items:flex-start;}
+.qb-dot{width:36px;height:36px;background:var(--olive);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:16px;flex-shrink:0;}
+.qb h5{font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:3px;}
+.qb p{font-size:13px;color:var(--text-gray);}
+.quote-form-box{background:var(--olive-pale);border-radius:20px;padding:40px;}
+.quote-form-box h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--text-dark);margin-bottom:28px;}
+.qf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.qf-row.full{grid-template-columns:1fr;margin-bottom:18px;}
+.qf-group{display:flex;flex-direction:column;gap:6px;}
+.qf-group label{font-size:13px;font-weight:500;color:var(--text-dark);}
+.qf-group input,.qf-group select,.qf-group textarea{padding:12px 14px;border:1.5px solid var(--olive-mid);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:var(--white);transition:border 0.2s;}
+.qf-group input:focus,.qf-group select:focus,.qf-group textarea:focus{border-color:var(--olive);}
+.qf-group textarea{resize:vertical;min-height:100px;}
+.service-checkboxes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.svc-check{display:flex;align-items:center;gap:10px;background:var(--white);border:1.5px solid var(--olive-mid);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all 0.2s;}
+.svc-check:hover,.svc-check.checked{border-color:var(--olive);background:var(--olive-pale);}
+.svc-check input{display:none;}
+.svc-check .chk{width:18px;height:18px;border:2px solid var(--olive-mid);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;}
+.svc-check.checked .chk{background:var(--olive);border-color:var(--olive);color:var(--white);}
+.svc-check span{font-size:13px;font-weight:500;color:var(--text-dark);}
+.qf-submit{width:100%;padding:14px;background:var(--olive);color:var(--white);border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;}
+.qf-submit:hover{background:var(--olive-dark);}
+
+/* SUCCESS MSG */
+.success-msg{display:none;background:var(--olive-pale);border:1px solid var(--olive);border-radius:12px;padding:20px 24px;text-align:center;margin-top:16px;}
+.success-msg.show{display:block;}
+.success-msg p{color:var(--olive-dark);font-size:14px;font-weight:500;}
+
+/* ============ PRIVACY POLICY PAGE ============ */
+.privacy-page{padding:80px 5%;background:var(--white);max-width:860px;margin:0 auto;}
+.privacy-page h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--text-dark);margin-bottom:10px;}
+.privacy-page .last-updated{font-size:13px;color:var(--text-gray);margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--olive-mid);}
+.privacy-section{margin-bottom:36px;}
+.privacy-section h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--olive-dark);margin-bottom:12px;}
+.privacy-section p{font-size:15px;color:var(--text-gray);line-height:1.85;margin-bottom:12px;}
+.privacy-section ul{list-style:none;padding:0;}
+.privacy-section ul li{font-size:15px;color:var(--text-gray);line-height:1.85;padding:4px 0 4px 20px;position:relative;}
+.privacy-section ul li::before{content:'•';position:absolute;left:0;color:var(--olive);font-weight:700;}
+.privacy-highlight{background:var(--olive-pale);border-left:4px solid var(--olive);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0;font-size:14px;color:var(--text-dark);line-height:1.7;}
+.privacy-contact-box{background:var(--olive-pale);border-radius:16px;padding:28px;margin-top:40px;display:flex;align-items:center;gap:20px;}
+.privacy-contact-box .icon{font-size:40px;}
+.privacy-contact-box h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:6px;}
+.privacy-contact-box p{font-size:14px;color:var(--text-gray);}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="logo">Pixel<span>Olive</span></div>
+  <div class="logo" onclick="go('home')">Pixel<span>Olive</span></div>
   <ul class="nav-links">
-    <li><a href="#">Services</a></li>
-    <li><a href="#">Process</a></li>
-    <li><a href="#">Pricing</a></li>
-    <li><a href="#">Portfolio</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a onclick="go('home')" id="nl-home">Home</a></li>
+    <li><a onclick="go('services')" id="nl-services">Services</a></li>
+    <li><a onclick="go('pricing')" id="nl-pricing">Pricing</a></li>
+    <li><a onclick="go('portfolio')" id="nl-portfolio">Portfolio</a></li>
+    <li><a onclick="go('contact')" id="nl-contact">Contact</a></li>
   </ul>
-  <a href="#" class="nav-cta">Get a Quote</a>
+  <button class="nav-cta" onclick="go('quote')">Get a Quote</button>
 </nav>
 
-<section class="hero">
-  <div>
-    <div class="hero-badge">✦ Web Build & Design Studio</div>
-    <h1>We Build Websites That <em>Work & Impress</em></h1>
-    <p>From concept to launch, we craft stunning websites, powerful web applications, and brand identities that convert visitors into loyal customers.</p>
-    <div class="hero-btns">
-      <a href="#" class="btn-primary">Start Your Project</a>
-      <a href="#" class="btn-secondary">View Portfolio</a>
-    </div>
+<!-- CALL MODAL -->
+<div class="modal-overlay" id="call-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="phone-icon">📞</div>
+    <h3>Schedule a Free Call</h3>
+    <p>We're available Saturday–Thursday, 10AM–8PM (BST). Give us a call and let's talk about your project!</p>
+    <div class="modal-phone">+8801971989219</div>
+    <a href="tel:+8801971989219" class="btn btn-primary" style="display:block;text-align:center;font-size:16px;padding:15px;">📲 Call Now</a>
   </div>
-  <div class="hero-visual">
-    <div class="stat-row">
-      <div class="stat-card"><div class="stat-num">100+</div><div class="stat-lbl">Projects Delivered</div></div>
-      <div class="stat-card"><div class="stat-num">93%</div><div class="stat-lbl">Client Satisfaction</div></div>
-    </div>
-    <div style="padding:4px 0;">
-      <div class="mock-label"><span>Page Speed</span><span>95/100</span></div>
-      <div class="mock-bar fill-90"></div>
-      <div class="mock-label"><span>Mobile Score</span><span>98/100</span></div>
-      <div class="mock-bar fill-80"></div>
-      <div class="mock-label"><span>SEO Score</span><span>92/100</span></div>
-      <div class="mock-bar fill-60"></div>
-    </div>
-  </div>
-</section>
+</div>
 
-<section class="services">
-  <div class="section-tag">What We Do</div>
-  <h2 class="section-title">Our Core Services</h2>
-  <p class="section-sub">End-to-end digital solutions crafted with care, precision, and a passion for beautiful design.</p>
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">🌐</div>
-      <h3>Website Making</h3>
-      <p>Custom websites built from scratch, tailored to your brand and business goals — fast, responsive, and SEO-ready.</p>
-      <ul class="card-list">
-        <li>Custom layouts & templates</li>
-        <li>Responsive across all devices</li>
-        <li>SEO & performance optimized</li>
-        <li>CMS integration (WordPress, etc.)</li>
-      </ul>
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal-box">
+    <div class="phone-icon">✅</div>
+    <h3>Payment Submitted!</h3>
+    <p>Thank you for your order. Payment received to account <strong>4937242020839963</strong>. We'll contact you within 24 hours to get started.</p>
+    <button class="btn btn-primary" style="width:100%;padding:15px;" onclick="closeModal();go('home')">Back to Home</button>
+  </div>
+</div>
+
+<!-- QUOTE SUCCESS MODAL -->
+<div class="modal-overlay" id="quote-modal">
+  <div class="modal-box">
+    <div class="phone-icon">🎉</div>
+    <h3>Quote Request Sent!</h3>
+    <p>We received your request and will get back to you within 24 hours with a detailed quote.</p>
+    <button class="btn btn-primary" style="width:100%;padding:15px;" onclick="closeModal()">Got it!</button>
+  </div>
+</div>
+
+<!-- ============ HOME PAGE ============ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div>
+      <div class="hero-badge">✦ Web Build & Design Studio</div>
+      <h1>We Design.<br><em>We Build. You Grow.</em></h1>
+      <div class="hero-desc">
+        <p class="lead">Your vision deserves more than just a website — it deserves a digital experience that captivates, converts, and scales.</p>
+        <p class="sub">From a <strong>bold first impression</strong> to a <strong>seamless user journey</strong>, we craft every pixel with purpose — turning your brand into a powerful online presence that works around the clock.</p>
+        <div class="hero-pills">
+          <span class="pill">⚡ Fast Delivery</span>
+          <span class="pill">🎯 Conversion Focused</span>
+          <span class="pill">📱 Mobile First</span>
+          <span class="pill">🔍 SEO Ready</span>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="go('pricing')">Start Your Project</button>
+        <button class="btn btn-secondary" onclick="go('portfolio')">View Portfolio</button>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-icon">⚙️</div>
-      <h3>Web Development</h3>
-      <p>Robust, scalable web applications with modern technologies. From landing pages to full-stack platforms.</p>
-      <ul class="card-list">
-        <li>React, Next.js, Vue development</li>
-        <li>Backend APIs & databases</li>
-        <li>E-commerce solutions</li>
-        <li>Performance & security</li>
-      </ul>
+    <div class="hero-visual">
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-num">100+</div><div class="stat-lbl">Projects Delivered</div></div>
+        <div class="stat-card"><div class="stat-num">93%</div><div class="stat-lbl">Client Satisfaction</div></div>
+      </div>
+      <div style="padding:4px 0;">
+        <div class="mock-label"><span>Page Speed</span><span>95/100</span></div>
+        <div class="mock-bar fill-90"></div>
+        <div class="mock-label"><span>Mobile Score</span><span>98/100</span></div>
+        <div class="mock-bar fill-80"></div>
+        <div class="mock-label"><span>SEO Score</span><span>92/100</span></div>
+        <div class="mock-bar fill-60"></div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-icon">🎨</div>
-      <h3>UI/UX Designing</h3>
-      <p>Pixel-perfect, user-centered designs that engage visitors and guide them effortlessly toward action.</p>
-      <ul class="card-list">
-        <li>Wireframes & prototypes</li>
-        <li>Brand identity & logo design</li>
-        <li>Figma & Adobe XD design</li>
-        <li>User testing & iteration</li>
-      </ul>
+  </section>
+
+  <section class="home-services">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">Our Core Services</h2>
+    <p class="section-sub">Click any service to explore what we offer in detail.</p>
+    <div class="service-cards">
+      <div class="service-card" onclick="go('service-website')">
+        <div class="scard-icon">🌐</div>
+        <h3>Website Making</h3>
+        <p>Custom websites built from scratch — fast, responsive, and SEO-ready for your business.</p>
+        <ul class="card-list"><li>Custom layouts & templates</li><li>Responsive across all devices</li><li>SEO & performance optimized</li></ul>
+        <div class="scard-arrow">Explore Service →</div>
+      </div>
+      <div class="service-card" onclick="go('service-dev')">
+        <div class="scard-icon">⚙️</div>
+        <h3>Web Development</h3>
+        <p>Robust, scalable web applications with modern technologies from landing pages to full-stack.</p>
+        <ul class="card-list"><li>React, Next.js, Vue development</li><li>Backend APIs & databases</li><li>E-commerce solutions</li></ul>
+        <div class="scard-arrow">Explore Service →</div>
+      </div>
+      <div class="service-card" onclick="go('service-design')">
+        <div class="scard-icon">🎨</div>
+        <h3>UI/UX Designing</h3>
+        <p>Pixel-perfect, user-centered designs that engage visitors and drive them toward action.</p>
+        <ul class="card-list"><li>Wireframes & prototypes</li><li>Brand identity & logo design</li><li>Figma & Adobe XD design</li></ul>
+        <div class="scard-arrow">Explore Service →</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-process">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">Our Simple Process</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4>Discovery Call</h4><p>We listen to your goals, audience, and vision to align on scope and timeline.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Design & Plan</h4><p>We wireframe, prototype, and get your approval before writing a single line of code.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Build & Develop</h4><p>Our team brings the approved design to life with clean, maintainable code.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Launch & Support</h4><p>We deploy, test, and stay by your side with ongoing maintenance and support.</p></div>
+    </div>
+  </section>
+
+  <section class="home-pricing">
+    <div class="section-tag">Pricing Plans</div>
+    <h2 class="section-title">Transparent Pricing</h2>
+    <p class="section-sub">No hidden fees. Choose a plan — click to explore full details.</p>
+    <div class="pricing-cards">
+      <div class="p-card" onclick="go('pricing')">
+        <div class="p-tag">Starter</div>
+        <div class="p-name">Basic Website</div>
+        <div class="p-price">$499 <span>/ project</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Up to 5 pages</li><li>Responsive design</li><li>Contact form</li><li>Basic SEO setup</li><li>1 month support</li></ul>
+        <button class="p-btn outline" onclick="event.stopPropagation();openPayment('Starter','$499','499')">Get Started</button>
+      </div>
+      <div class="p-card featured" onclick="go('pricing')">
+        <div class="p-tag">Most Popular</div>
+        <div class="p-name">Professional</div>
+        <div class="p-price">$1,299 <span>/ project</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Up to 15 pages</li><li>Custom UI/UX design</li><li>CMS integration</li><li>Advanced SEO</li><li>E-commerce ready</li><li>3 months support</li></ul>
+        <button class="p-btn solid" onclick="event.stopPropagation();openPayment('Professional','$1,299','1299')">Get Started</button>
+      </div>
+      <div class="p-card" onclick="go('pricing')">
+        <div class="p-tag">Enterprise</div>
+        <div class="p-name">Custom Build</div>
+        <div class="p-price">Custom <span>/ quote</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Unlimited pages</li><li>Full-stack development</li><li>Custom integrations</li><li>Dedicated team</li><li>Priority support</li><li>12 months support</li></ul>
+        <button class="p-btn outline" onclick="event.stopPropagation();go('quote')">Contact Us</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-testimonials">
+    <div class="section-tag">Client Stories</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="t-grid">
+      <div class="t-card"><div class="t-stars">★★★★★</div><blockquote>"PixelOlive transformed our outdated website into a modern masterpiece. Traffic doubled within the first month!"</blockquote><div class="t-author"><div class="t-avatar">AR</div><div><div class="t-name">Arif Rahman</div><div class="t-role">CEO, TechBD</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★★</div><blockquote>"Their design team nailed our brand perfectly. The process was smooth, communication was excellent throughout."</blockquote><div class="t-author"><div class="t-avatar">SJ</div><div><div class="t-name">Sarah James</div><div class="t-role">Founder, StyleHub</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★★</div><blockquote>"Our e-commerce sales increased by 40% after launching the new site. Best investment we've made this year."</blockquote><div class="t-author"><div class="t-avatar">MH</div><div><div class="t-name">Mehedi Hasan</div><div class="t-role">Director, ShopDhaka</div></div></div></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to Build Something Great?</h2>
+    <p>Let's turn your vision into a stunning, high-performing website — starting today.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="go('pricing')">Start Your Project</button>
+      <button class="btn btn-outline-white" onclick="openCallModal()">Schedule a Free Call</button>
+    </div>
+  </section>
+  <div id="home-footer"></div>
+</div>
+
+<!-- ============ SERVICES PAGE ============ -->
+<div id="page-services" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Our Services</div>
+    <h1 class="section-title">What We Offer</h1>
+    <p>From elegant websites to powerful web applications and stunning designs — we cover every aspect of your digital presence.</p>
+    <button class="btn btn-primary" onclick="go('quote')">Get a Free Quote</button>
+  </div>
+  <div class="services-grid">
+    <div class="srv-full-card">
+      <div>
+        <div class="srv-big-icon">🌐</div>
+        <h2>Website Making</h2>
+        <p>We build beautiful, functional websites tailored to your brand identity. Every website we create is crafted with purpose — designed to attract visitors, engage them meaningfully, and convert them into customers.</p>
+        <p>Whether it's a simple landing page or a complex multi-section corporate site, we ensure your website represents your brand at its best — fast, mobile-friendly, and built to rank.</p>
+        <div class="srv-tags"><span class="srv-tag">WordPress</span><span class="srv-tag">HTML/CSS/JS</span><span class="srv-tag">Landing Pages</span><span class="srv-tag">Corporate Sites</span><span class="srv-tag">Portfolios</span><span class="srv-tag">Blogs</span></div>
+        <button class="btn btn-primary" onclick="go('service-website')">Explore in Detail →</button>
+      </div>
+      <div class="srv-img-mock">🌐</div>
+    </div>
+    <div class="srv-full-card reverse">
+      <div>
+        <div class="srv-big-icon">⚙️</div>
+        <h2>Web Development</h2>
+        <p>Our development team builds robust, scalable web applications using the latest technologies. From simple interactive features to complex full-stack systems, we write clean, maintainable code.</p>
+        <p>We specialize in modern frameworks like React and Next.js, paired with powerful backends to deliver high-performance apps that scale with your business.</p>
+        <div class="srv-tags"><span class="srv-tag">React & Next.js</span><span class="srv-tag">Vue.js</span><span class="srv-tag">Node.js</span><span class="srv-tag">APIs</span><span class="srv-tag">Databases</span><span class="srv-tag">E-Commerce</span></div>
+        <button class="btn btn-primary" onclick="go('service-dev')">Explore in Detail →</button>
+      </div>
+      <div class="srv-img-mock">⚙️</div>
+    </div>
+    <div class="srv-full-card">
+      <div>
+        <div class="srv-big-icon">🎨</div>
+        <h2>UI/UX Designing</h2>
+        <p>Great design is not just about looking good — it's about feeling right. We create user interfaces that are intuitive, delightful, and strategically designed to guide users toward conversion.</p>
+        <div class="srv-tags"><span class="srv-tag">Figma</span><span class="srv-tag">Adobe XD</span><span class="srv-tag">Wireframes</span><span class="srv-tag">Prototypes</span><span class="srv-tag">Brand Identity</span><span class="srv-tag">Logo Design</span></div>
+        <button class="btn btn-primary" onclick="go('service-design')">Explore in Detail →</button>
+      </div>
+      <div class="srv-img-mock">🎨</div>
     </div>
   </div>
-</section>
-
-<section class="process">
-  <div class="section-tag">How It Works</div>
-  <h2 class="section-title">Our Simple Process</h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h4>Discovery Call</h4>
-      <p>We listen to your goals, audience, and vision to align on scope and timeline.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h4>Design & Plan</h4>
-      <p>We wireframe, prototype, and get your approval before writing a single line of code.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h4>Build & Develop</h4>
-      <p>Our team brings the approved design to life with clean, maintainable code.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <h4>Launch & Support</h4>
-      <p>We deploy, test, and stay by your side with ongoing maintenance and support.</p>
+  <div class="why-us">
+    <div class="section-tag">Why Choose Us</div>
+    <h2 class="section-title">The PixelOlive Advantage</h2>
+    <div class="why-grid">
+      <div class="why-card"><div class="icon">⚡</div><h4>Fast Turnaround</h4><p>We deliver projects on time without compromising quality.</p></div>
+      <div class="why-card"><div class="icon">💬</div><h4>Clear Communication</h4><p>Daily updates, transparent timelines, always reachable.</p></div>
+      <div class="why-card"><div class="icon">🔒</div><h4>Secure & Reliable</h4><p>Every project built with best security practices and tested thoroughly.</p></div>
+      <div class="why-card"><div class="icon">🌱</div><h4>Long-term Support</h4><p>We don't disappear after launch. We maintain, update, and grow with you.</p></div>
     </div>
   </div>
-</section>
-
-<section class="pricing">
-  <div class="section-tag">Pricing Plans</div>
-  <h2 class="section-title">Transparent Pricing</h2>
-  <p class="section-sub">No hidden fees. Choose a plan that fits your needs and budget.</p>
-  <div class="pricing-cards">
-    <div class="p-card">
-      <div class="p-tag">Starter</div>
-      <div class="p-name">Basic Website</div>
-      <div class="p-price">$499 <span>/ project</span></div>
-      <div class="p-divider"></div>
-      <ul class="p-features">
-        <li>Up to 5 pages</li>
-        <li>Responsive design</li>
-        <li>Contact form</li>
-        <li>Basic SEO setup</li>
-        <li>1 month support</li>
-      </ul>
-      <a href="#" class="p-btn outline">Get Started</a>
+  <section class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Choose a service and let's build something incredible together.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="go('pricing')">See Pricing</button>
+      <button class="btn btn-outline-white" onclick="openCallModal()">Schedule a Free Call</button>
     </div>
-    <div class="p-card featured">
-      <div class="p-tag">Most Popular</div>
-      <div class="p-name">Professional</div>
-      <div class="p-price">$1,299 <span>/ project</span></div>
-      <div class="p-divider"></div>
-      <ul class="p-features">
+  </section>
+  <div id="services-footer"></div>
+</div>
+
+<!-- ============ SERVICE DETAIL: WEBSITE MAKING ============ -->
+<div id="page-service-website" class="page">
+  <div style="padding:30px 5% 0;"><button class="back-btn" onclick="go('services')">← Back to Services</button></div>
+  <div class="sd-hero">
+    <div>
+      <div class="big-icon">🌐</div>
+      <h1>Website Making</h1>
+      <p>We build stunning, high-performance websites from scratch — fully tailored to your brand, your goals, and your audience.</p>
+      <div class="hero-pills" style="margin-bottom:28px;"><span class="pill">Custom Design</span><span class="pill">SEO Ready</span><span class="pill">Mobile First</span><span class="pill">Fast Loading</span></div>
+      <button class="btn btn-primary" onclick="openPayment('Website Making','Starting $499','499')">Start a Website Project</button>
+    </div>
+    <div class="sd-mock">
+      <div style="width:100%;background:var(--olive-pale);border-radius:8px;height:40px;display:flex;align-items:center;padding:0 16px;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#ff6b6b;"></div><div style="width:8px;height:8px;border-radius:50%;background:#ffd93d;"></div><div style="width:8px;height:8px;border-radius:50%;background:var(--olive-light);"></div></div>
+      <div style="width:100%;flex:1;display:flex;flex-direction:column;gap:10px;padding:16px;">
+        <div style="height:60px;background:var(--olive-pale);border-radius:8px;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;"><div style="background:var(--olive-mid);border-radius:8px;"></div><div style="background:var(--olive-pale);border-radius:8px;"></div></div>
+        <div style="height:40px;background:var(--olive);border-radius:8px;opacity:0.6;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sd-features">
+    <div class="section-tag">What's Included</div>
+    <h2 class="section-title">Everything You Need</h2>
+    <div class="sd-features-grid">
+      <div class="sd-feat-card"><div class="fi">🎯</div><h4>Custom Design</h4><p>No templates. Every website is designed from scratch to match your brand.</p></div>
+      <div class="sd-feat-card"><div class="fi">📱</div><h4>Fully Responsive</h4><p>Looks and works perfectly on all devices — desktop, tablet, and mobile.</p></div>
+      <div class="sd-feat-card"><div class="fi">🔍</div><h4>SEO Optimized</h4><p>Built with proper SEO structure, fast load times, and meta tags.</p></div>
+      <div class="sd-feat-card"><div class="fi">⚡</div><h4>Lightning Fast</h4><p>Optimized images and clean code ensure under 2 second load times.</p></div>
+      <div class="sd-feat-card"><div class="fi">🔒</div><h4>SSL & Security</h4><p>HTTPS enabled, secure forms, protection against vulnerabilities.</p></div>
+      <div class="sd-feat-card"><div class="fi">📊</div><h4>Analytics Ready</h4><p>Google Analytics integration to track visitors and conversions.</p></div>
+    </div>
+  </div>
+  <div class="sd-process">
+    <div class="section-tag">Our Process</div>
+    <h2 class="section-title">How We Build Your Website</h2>
+    <div class="sd-steps">
+      <div class="sd-step"><div class="sd-step-num">1</div><div><h4>Discovery & Planning</h4><p>We understand your business, target audience, and goals.</p></div></div>
+      <div class="sd-step"><div class="sd-step-num">2</div><div><h4>Design Mockups</h4><p>Visual mockups in Figma for approval before coding begins.</p></div></div>
+      <div class="sd-step"><div class="sd-step-num">3</div><div><h4>Development</h4><p>Clean HTML, CSS, JS — or your preferred CMS.</p></div></div>
+      <div class="sd-step"><div class="sd-step-num">4</div><div><h4>Testing & Launch</h4><p>Thorough testing then deployment live and handover.</p></div></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>Let's Build Your Website</h2>
+    <p>Get started today with a free consultation and project quote.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="openPayment('Website Making','Starting $499','499')">Start Project</button>
+      <button class="btn btn-outline-white" onclick="go('quote')">Get a Quote</button>
+    </div>
+  </section>
+  <div id="sw-footer"></div>
+</div>
+
+<!-- ============ SERVICE DETAIL: WEB DEVELOPMENT ============ -->
+<div id="page-service-dev" class="page">
+  <div style="padding:30px 5% 0;"><button class="back-btn" onclick="go('services')">← Back to Services</button></div>
+  <div class="sd-hero">
+    <div>
+      <div class="big-icon">⚙️</div>
+      <h1>Web Development</h1>
+      <p>We engineer powerful, scalable web applications using modern technologies. From interactive frontends to complex backend systems.</p>
+      <div class="hero-pills" style="margin-bottom:28px;"><span class="pill">React & Next.js</span><span class="pill">Node.js</span><span class="pill">APIs</span><span class="pill">E-Commerce</span></div>
+      <button class="btn btn-primary" onclick="openPayment('Web Development','Starting $1,299','1299')">Start a Dev Project</button>
+    </div>
+    <div class="sd-mock">
+      <div style="width:100%;background:#1a1f0e;border-radius:8px;padding:16px;flex:1;font-family:monospace;font-size:12px;color:var(--olive-light);line-height:1.8;">
+        <div style="color:#8A9E4A;">// PixelOlive Dev Stack</div>
+        <div><span style="color:#6B7C3A;">const</span> stack = {</div>
+        <div style="padding-left:16px;">frontend: <span style="color:#D4DDB8;">'React / Next.js'</span>,</div>
+        <div style="padding-left:16px;">backend: <span style="color:#D4DDB8;">'Node.js / Express'</span>,</div>
+        <div style="padding-left:16px;">db: <span style="color:#D4DDB8;">'MongoDB / MySQL'</span>,</div>
+        <div style="padding-left:16px;">deploy: <span style="color:#D4DDB8;">'Vercel / AWS'</span></div>
+        <div>};</div>
+      </div>
+    </div>
+  </div>
+  <div class="sd-features">
+    <div class="section-tag">Technical Expertise</div>
+    <h2 class="section-title">What We Build</h2>
+    <div class="sd-features-grid">
+      <div class="sd-feat-card"><div class="fi">⚛️</div><h4>React & Next.js Apps</h4><p>Fast, SEO-friendly single page and server-side rendered applications.</p></div>
+      <div class="sd-feat-card"><div class="fi">🛒</div><h4>E-Commerce Stores</h4><p>Full-featured online stores with cart, payments, and inventory management.</p></div>
+      <div class="sd-feat-card"><div class="fi">🔌</div><h4>API Development</h4><p>RESTful or GraphQL APIs connecting frontend to databases and services.</p></div>
+      <div class="sd-feat-card"><div class="fi">🗄️</div><h4>Database Design</h4><p>Efficient database architecture using MongoDB, MySQL, or PostgreSQL.</p></div>
+      <div class="sd-feat-card"><div class="fi">☁️</div><h4>Cloud Deployment</h4><p>Deploy to AWS, Vercel, or DigitalOcean with CI/CD pipelines.</p></div>
+      <div class="sd-feat-card"><div class="fi">🔐</div><h4>Auth & Security</h4><p>JWT, OAuth, role-based access control, and data encryption.</p></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>Let's Build Your Application</h2>
+    <p>Tell us what you need — we'll engineer the perfect solution.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="openPayment('Web Development','Starting $1,299','1299')">Start Project</button>
+      <button class="btn btn-outline-white" onclick="go('quote')">Get a Quote</button>
+    </div>
+  </section>
+  <div id="sd-footer"></div>
+</div>
+
+<!-- ============ SERVICE DETAIL: UI/UX DESIGN ============ -->
+<div id="page-service-design" class="page">
+  <div style="padding:30px 5% 0;"><button class="back-btn" onclick="go('services')">← Back to Services</button></div>
+  <div class="sd-hero">
+    <div>
+      <div class="big-icon">🎨</div>
+      <h1>UI/UX Designing</h1>
+      <p>We create designs that don't just look beautiful — they feel natural, drive engagement, and convert users into loyal customers.</p>
+      <div class="hero-pills" style="margin-bottom:28px;"><span class="pill">Figma Design</span><span class="pill">User Research</span><span class="pill">Prototyping</span><span class="pill">Brand Identity</span></div>
+      <button class="btn btn-primary" onclick="openPayment('UI/UX Design','Starting $499','499')">Start a Design Project</button>
+    </div>
+    <div class="sd-mock" style="flex-direction:row;gap:12px;flex-wrap:wrap;align-items:flex-start;padding:20px;">
+      <div style="width:45%;background:var(--olive-pale);border-radius:8px;height:80px;"></div>
+      <div style="width:50%;background:var(--olive-mid);border-radius:8px;height:80px;"></div>
+      <div style="width:100%;background:var(--olive);border-radius:8px;height:40px;opacity:0.7;"></div>
+      <div style="width:30%;background:var(--olive-pale);border-radius:8px;height:60px;"></div>
+      <div style="width:65%;background:var(--olive-mid);border-radius:8px;height:60px;"></div>
+    </div>
+  </div>
+  <div class="sd-features">
+    <div class="section-tag">Design Services</div>
+    <h2 class="section-title">What We Design</h2>
+    <div class="sd-features-grid">
+      <div class="sd-feat-card"><div class="fi">🗺️</div><h4>User Research</h4><p>We study your target users — behaviors, needs, and pain points.</p></div>
+      <div class="sd-feat-card"><div class="fi">📐</div><h4>Wireframing</h4><p>Low-fidelity wireframes to establish page structure and user flows.</p></div>
+      <div class="sd-feat-card"><div class="fi">✨</div><h4>Visual Design</h4><p>High-fidelity, pixel-perfect UI designs in Figma with your brand identity.</p></div>
+      <div class="sd-feat-card"><div class="fi">🖱️</div><h4>Interactive Prototypes</h4><p>Clickable Figma prototypes simulating real user experience.</p></div>
+      <div class="sd-feat-card"><div class="fi">🏷️</div><h4>Brand Identity</h4><p>Logo design, color palettes, typography systems, and brand guidelines.</p></div>
+      <div class="sd-feat-card"><div class="fi">📋</div><h4>Design System</h4><p>Reusable component library and style guide for consistent identity.</p></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>Let's Design Something Beautiful</h2>
+    <p>Great design starts with a conversation. Let's have one.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="openPayment('UI/UX Design','Starting $499','499')">Start Design Project</button>
+      <button class="btn btn-outline-white" onclick="go('quote')">Get a Quote</button>
+    </div>
+  </section>
+  <div id="sdes-footer"></div>
+</div>
+
+<!-- ============ PORTFOLIO PAGE ============ -->
+<div id="page-portfolio" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Our Portfolio</div>
+    <h1 class="section-title">Our Work Speaks</h1>
+    <p>100+ projects delivered across industries. Browse our latest work.</p>
+  </div>
+  <div class="portfolio-page">
+    <div class="port-filters">
+      <button class="port-filter active" onclick="filterPort(this,'all')">All Work</button>
+      <button class="port-filter" onclick="filterPort(this,'website')">Website Making</button>
+      <button class="port-filter" onclick="filterPort(this,'dev')">Web Development</button>
+      <button class="port-filter" onclick="filterPort(this,'design')">UI/UX Design</button>
+    </div>
+    <div class="port-grid" id="port-grid">
+      <div class="port-item" data-cat="website"><div class="port-img" style="background:var(--olive-pale);">🏢</div><div class="port-info"><h4>TechBD Corporate Site</h4><p>A modern, high-converting corporate website for a Dhaka-based tech firm.</p><span class="port-tag">Website Making</span></div></div>
+      <div class="port-item" data-cat="dev"><div class="port-img" style="background:#EFF2E6;">🛒</div><div class="port-info"><h4>ShopDhaka E-Commerce</h4><p>Full-featured online store with cart, payments, and inventory dashboard.</p><span class="port-tag">Web Development</span></div></div>
+      <div class="port-item" data-cat="design"><div class="port-img" style="background:var(--olive-mid);">🎨</div><div class="port-info"><h4>StyleHub Brand Identity</h4><p>Complete brand identity including logo, color palette, and style guide.</p><span class="port-tag">UI/UX Design</span></div></div>
+      <div class="port-item" data-cat="website"><div class="port-img" style="background:#D4DDB8;">🏥</div><div class="port-info"><h4>MediCare Landing Page</h4><p>Clean, trustworthy landing page for a healthcare service provider.</p><span class="port-tag">Website Making</span></div></div>
+      <div class="port-item" data-cat="dev"><div class="port-img" style="background:var(--olive-pale);">📊</div><div class="port-info"><h4>Analytics Dashboard</h4><p>Real-time data visualization dashboard for a fintech startup.</p><span class="port-tag">Web Development</span></div></div>
+      <div class="port-item" data-cat="design"><div class="port-img" style="background:#EFF2E6;">📱</div><div class="port-info"><h4>FoodApp UI Design</h4><p>Complete UI design for a food delivery mobile app, 48 screens in Figma.</p><span class="port-tag">UI/UX Design</span></div></div>
+      <div class="port-item" data-cat="website"><div class="port-img" style="background:var(--olive-mid);">🎓</div><div class="port-info"><h4>EduPath Website</h4><p>Educational platform website with course listings and enrollment.</p><span class="port-tag">Website Making</span></div></div>
+      <div class="port-item" data-cat="dev"><div class="port-img" style="background:var(--olive-pale);">💼</div><div class="port-info"><h4>FreelanceHub Platform</h4><p>Freelance marketplace connecting clients with professionals in Bangladesh.</p><span class="port-tag">Web Development</span></div></div>
+      <div class="port-item" data-cat="design"><div class="port-img" style="background:#D4DDB8;">✈️</div><div class="port-info"><h4>TravelBD Redesign</h4><p>Complete UX overhaul of a travel booking platform — 60% increase in bookings.</p><span class="port-tag">UI/UX Design</span></div></div>
+    </div>
+    <div class="port-stats">
+      <div class="pstat"><div class="num">100+</div><div class="lbl">Projects Delivered</div></div>
+      <div class="pstat"><div class="num">50+</div><div class="lbl">Happy Clients</div></div>
+      <div class="pstat"><div class="num">93%</div><div class="lbl">Client Satisfaction</div></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>Want to Be Our Next Success Story?</h2>
+    <p>Let's create something remarkable together.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="go('quote')">Get a Free Quote</button>
+      <button class="btn btn-outline-white" onclick="openCallModal()">Schedule a Free Call</button>
+    </div>
+  </section>
+  <div id="port-footer"></div>
+</div>
+
+<!-- ============ PRICING PAGE ============ -->
+<div id="page-pricing" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Pricing Plans</div>
+    <h1 class="section-title">Transparent Pricing</h1>
+    <p>No hidden fees, no surprises. Choose the plan that fits your needs.</p>
+  </div>
+  <div class="pricing-page" style="padding:80px 5%;">
+    <div class="pricing-cards">
+      <div class="p-card">
+        <div class="p-tag">Starter</div>
+        <div class="p-name">Basic Website</div>
+        <div class="p-price">$499 <span>/ project</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Up to 5 pages</li><li>Responsive design</li><li>Contact form</li><li>Basic SEO setup</li><li>Google Analytics</li><li>1 month support</li></ul>
+        <button class="p-btn outline" onclick="openPayment('Starter — Basic Website','$499','499')">Get Started</button>
+      </div>
+      <div class="p-card featured">
+        <div class="p-tag">Most Popular</div>
+        <div class="p-name">Professional</div>
+        <div class="p-price">$1,299 <span>/ project</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Up to 15 pages</li><li>Custom UI/UX design</li><li>CMS integration</li><li>Advanced SEO</li><li>E-commerce ready</li><li>Speed optimization</li><li>3 months support</li></ul>
+        <button class="p-btn solid" onclick="openPayment('Professional','$1,299','1299')">Get Started</button>
+      </div>
+      <div class="p-card">
+        <div class="p-tag">Enterprise</div>
+        <div class="p-name">Custom Build</div>
+        <div class="p-price">Custom <span>/ quote</span></div>
+        <div class="p-divider"></div>
+        <ul class="p-features"><li>Unlimited pages</li><li>Full-stack development</li><li>Custom integrations</li><li>Dedicated dev team</li><li>Priority support 24/7</li><li>12 months support</li></ul>
+        <button class="p-btn outline" onclick="go('quote')">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="pricing-compare">
+    <div class="section-tag">Compare Plans</div>
+    <h2 class="section-title">What's Included in Each Plan</h2>
+    <table class="compare-table">
+      <thead><tr><th>Feature</th><th>Starter</th><th>Professional</th><th>Enterprise</th></tr></thead>
+      <tbody>
+        <tr><td>Number of Pages</td><td>Up to 5</td><td>Up to 15</td><td>Unlimited</td></tr>
+        <tr><td>Custom Design</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Mobile Responsive</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>SEO Optimization</td><td>Basic</td><td>Advanced</td><td>Full</td></tr>
+        <tr><td>CMS Integration</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>E-Commerce</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Custom Features</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+        <tr><td>Support Duration</td><td>1 month</td><td>3 months</td><td>12 months</td></tr>
+        <tr><td>Priority Support</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="faq-section">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How long does a project take?</span><span>+</span></div><div class="faq-a">Starter projects typically take 1–2 weeks. Professional projects take 2–4 weeks. Enterprise projects are scoped individually, usually 4–8 weeks.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Do you offer revisions?</span><span>+</span></div><div class="faq-a">Yes! All plans include unlimited revisions during the design phase. After development, we offer up to 3 rounds of revisions before final delivery.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>What payment methods do you accept?</span><span>+</span></div><div class="faq-a">We accept bKash, Nagad, Rocket, bank transfer, PayPal, and credit/debit cards. We typically require 50% upfront and 50% on delivery.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Will I own the website after delivery?</span><span>+</span></div><div class="faq-a">Absolutely. Once final payment is made, you own 100% of the website including all code, design files, and content.</div></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <h2>Not Sure Which Plan to Choose?</h2>
+    <p>Talk to us — we'll help you pick the right plan for your goals and budget.</p>
+    <div class="cta-btns">
+      <button class="btn btn-white" onclick="openCallModal()">Schedule a Free Call</button>
+      <button class="btn btn-outline-white" onclick="go('quote')">Get a Custom Quote</button>
+    </div>
+  </section>
+  <div id="pricing-footer"></div>
+</div>
+
+<!-- ============ PAYMENT PAGE ============ -->
+<div id="page-payment" class="page">
+  <div style="padding:24px 5% 0;"><button class="back-btn" onclick="go('pricing')">← Back to Pricing</button></div>
+  <div class="payment-page">
+
+    <!-- LEFT: ORDER SUMMARY -->
+    <div class="payment-summary">
+      <h3>Order Summary</h3>
+      <div class="p-tag" id="pay-tag">Selected Plan</div>
+      <div class="pay-plan-name" id="pay-plan-name">Professional</div>
+      <div class="pay-plan-price" id="pay-plan-price">$1,299 <span>/ project</span></div>
+      <ul class="pay-features" id="pay-features">
         <li>Up to 15 pages</li>
         <li>Custom UI/UX design</li>
         <li>CMS integration</li>
@@ -265,105 +876,629 @@
         <li>E-commerce ready</li>
         <li>3 months support</li>
       </ul>
-      <a href="#" class="p-btn solid">Get Started</a>
+      <div style="background:var(--olive-mid);border-radius:10px;padding:16px;font-size:13px;color:var(--text-dark);margin-bottom:14px;">
+        <strong>📞 Need help?</strong><br>
+        <span style="color:var(--text-gray);">Call: +8801971989219</span>
+      </div>
+      <div style="background:var(--olive-pale);border:1px solid var(--olive-mid);border-radius:10px;padding:14px;font-size:12px;color:var(--text-gray);line-height:1.7;">
+        🔒 <strong style="color:var(--text-dark);">100% Secure</strong><br>
+        All payments are encrypted and credited directly to account <strong style="color:var(--olive-dark);">4937242020839963</strong>.
+      </div>
     </div>
-    <div class="p-card">
-      <div class="p-tag">Enterprise</div>
-      <div class="p-name">Custom Build</div>
-      <div class="p-price">Custom <span>/ quote</span></div>
-      <div class="p-divider"></div>
-      <ul class="p-features">
-        <li>Unlimited pages</li>
-        <li>Full-stack development</li>
-        <li>Custom integrations</li>
-        <li>Dedicated team</li>
-        <li>Priority support</li>
-        <li>12 months support</li>
+
+    <!-- RIGHT: FORM -->
+    <div class="payment-form">
+      <h2>Complete Your Order</h2>
+      <p class="sub">Fill in your details, select a payment method, and confirm your project.</p>
+
+      <!-- PERSONAL INFO -->
+      <div class="form-section">
+        <h4>👤 Your Information</h4>
+        <div class="form-row">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="pf-name" placeholder="Your full name"></div>
+          <div class="form-group"><label>Email Address *</label><input type="email" id="pf-email" placeholder="you@email.com"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Phone Number *</label><input type="tel" id="pf-phone" placeholder="+880 1700 000000"></div>
+          <div class="form-group"><label>Company / Business</label><input type="text" id="pf-company" placeholder="Optional"></div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group"><label>Project Description</label><textarea id="pf-desc" placeholder="Tell us briefly about your project..." style="resize:vertical;min-height:90px;"></textarea></div>
+        </div>
+      </div>
+
+      <!-- PAYMENT METHOD SELECTOR -->
+      <div class="form-section">
+        <h4>💳 Select Payment Method</h4>
+        <div class="payment-methods">
+          <div class="pay-method selected" onclick="selectMethod(this,'bkash')" data-method="bkash">
+            <div class="icon">📱</div><div class="lbl">bKash</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this,'nagad')" data-method="nagad">
+            <div class="icon">💚</div><div class="lbl">Nagad</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this,'rocket')" data-method="rocket">
+            <div class="icon">🚀</div><div class="lbl">Rocket</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this,'bank')" data-method="bank">
+            <div class="icon">🏦</div><div class="lbl">Bank Transfer</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this,'card')" data-method="card">
+            <div class="icon">💳</div><div class="lbl">Card</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this,'paypal')" data-method="paypal">
+            <div class="icon">🌐</div><div class="lbl">PayPal</div>
+          </div>
+        </div>
+
+        <!-- ── bKash FORM ── -->
+        <div class="pay-form-block active" id="form-bkash">
+          <div style="background:linear-gradient(135deg,#E2136E,#a00f50);border-radius:14px;padding:20px 24px;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:16px;">
+            <span style="font-size:36px;">📱</span>
+            <div>
+              <div style="font-size:12px;opacity:0.85;margin-bottom:2px;">Send payment to bKash Number</div>
+              <div style="font-size:26px;font-weight:700;letter-spacing:2px;">01971989219</div>
+              <div style="font-size:11px;opacity:0.75;margin-top:2px;">Account Type: Personal</div>
+            </div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text-dark);margin-bottom:16px;line-height:1.8;">
+            <strong>How to Pay via bKash:</strong><br>
+            1. Open bKash app → Send Money<br>
+            2. Enter number: <strong>01971989219</strong><br>
+            3. Enter amount &amp; Reference: <strong id="bkash-ref">PO-ORDER</strong><br>
+            4. Complete &amp; enter Transaction ID below
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Transaction ID *</label><input type="text" placeholder="e.g. 9AB3XD7K2M"></div>
+            <div class="form-group"><label>Amount Sent (BDT) *</label><input type="number" placeholder="Enter amount"></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group"><label>Your bKash Number</label><input type="tel" placeholder="01XXXXXXXXX"></div>
+          </div>
+        </div>
+
+        <!-- ── Nagad FORM ── -->
+        <div class="pay-form-block" id="form-nagad">
+          <div style="background:linear-gradient(135deg,#F05829,#c03a10);border-radius:14px;padding:20px 24px;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:16px;">
+            <span style="font-size:36px;">💚</span>
+            <div>
+              <div style="font-size:12px;opacity:0.85;margin-bottom:2px;">Send payment to Nagad Number</div>
+              <div style="font-size:26px;font-weight:700;letter-spacing:2px;">01971989219</div>
+              <div style="font-size:11px;opacity:0.75;margin-top:2px;">Account Type: Personal</div>
+            </div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text-dark);margin-bottom:16px;line-height:1.8;">
+            <strong>How to Pay via Nagad:</strong><br>
+            1. Open Nagad app → Send Money<br>
+            2. Enter number: <strong>01971989219</strong><br>
+            3. Enter amount &amp; Reference: <strong id="nagad-ref">PO-ORDER</strong><br>
+            4. Complete &amp; enter Transaction ID below
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Transaction ID *</label><input type="text" placeholder="e.g. NAG8X72KLM"></div>
+            <div class="form-group"><label>Amount Sent (BDT) *</label><input type="number" placeholder="Enter amount"></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group"><label>Your Nagad Number</label><input type="tel" placeholder="01XXXXXXXXX"></div>
+          </div>
+        </div>
+
+        <!-- ── Rocket FORM ── -->
+        <div class="pay-form-block" id="form-rocket">
+          <div style="background:linear-gradient(135deg,#8B1A8B,#5a0f5a);border-radius:14px;padding:20px 24px;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:16px;">
+            <span style="font-size:36px;">🚀</span>
+            <div>
+              <div style="font-size:12px;opacity:0.85;margin-bottom:2px;">Send payment to Rocket Number</div>
+              <div style="font-size:26px;font-weight:700;letter-spacing:2px;">01971989219</div>
+              <div style="font-size:11px;opacity:0.75;margin-top:2px;">DBBL Mobile Banking</div>
+            </div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text-dark);margin-bottom:16px;line-height:1.8;">
+            <strong>How to Pay via Rocket:</strong><br>
+            1. Dial *322# or open Rocket app<br>
+            2. Choose Send Money → Enter: <strong>01971989219</strong><br>
+            3. Enter amount &amp; PIN to confirm<br>
+            4. Enter Transaction ID below
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Transaction ID *</label><input type="text" placeholder="e.g. RKT1234567"></div>
+            <div class="form-group"><label>Amount Sent (BDT) *</label><input type="number" placeholder="Enter amount"></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group"><label>Your Rocket Number</label><input type="tel" placeholder="01XXXXXXXXX"></div>
+          </div>
+        </div>
+
+        <!-- ── Bank Transfer FORM ── -->
+        <div class="pay-form-block" id="form-bank">
+          <div style="background:linear-gradient(135deg,#4A5628,#2e3518);border-radius:14px;padding:22px 24px;color:#fff;margin-bottom:18px;">
+            <div style="font-size:12px;opacity:0.8;margin-bottom:14px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:10px;">🏦 Bank Account Details</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">Account Name</div><div style="font-size:14px;font-weight:600;margin-top:4px;">PixelOlive Studio</div></div>
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">Account Number</div><div style="font-size:15px;font-weight:700;margin-top:4px;letter-spacing:1.5px;color:#D4DDB8;">4937242020839963</div></div>
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">Bank Name</div><div style="font-size:14px;font-weight:600;margin-top:4px;">Dutch Bangla Bank</div></div>
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">Branch</div><div style="font-size:14px;font-weight:600;margin-top:4px;">Dhaka Main Branch</div></div>
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">Routing Number</div><div style="font-size:14px;font-weight:600;margin-top:4px;">090275482</div></div>
+              <div><div style="font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:0.5px;">SWIFT Code</div><div style="font-size:14px;font-weight:600;margin-top:4px;">DBBLBDDH</div></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Sender Account Name *</label><input type="text" placeholder="Your bank account name"></div>
+            <div class="form-group"><label>Sender Account Number *</label><input type="text" placeholder="Your account number"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Your Bank Name *</label><input type="text" placeholder="Your bank name"></div>
+            <div class="form-group"><label>Transfer Reference / TxID *</label><input type="text" placeholder="Bank transaction reference"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Amount Transferred *</label><input type="number" placeholder="Amount in BDT or USD"></div>
+            <div class="form-group"><label>Transfer Date *</label><input type="date"></div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-gray);margin-top:4px;">
+            ✅ Transfer goes directly to account <strong style="color:var(--olive-dark);">4937242020839963</strong> (Dutch Bangla Bank — PixelOlive Studio).
+          </div>
+        </div>
+
+        <!-- ── CARD FORM ── -->
+        <div class="pay-form-block" id="form-card">
+          <!-- Live Card Preview -->
+          <div style="background:linear-gradient(135deg,#1a1f0e,#4A5628);border-radius:16px;padding:26px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;min-height:160px;">
+            <div style="position:absolute;top:-30px;right:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,0.04);"></div>
+            <div style="position:absolute;bottom:-40px;right:50px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.06);"></div>
+            <div style="font-size:10px;opacity:0.55;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;">Credit / Debit Card</div>
+            <div style="font-size:22px;letter-spacing:5px;margin-bottom:24px;font-family:monospace;font-weight:600;" id="card-display">•••• •••• •••• ••••</div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+              <div>
+                <div style="font-size:9px;opacity:0.55;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Card Holder</div>
+                <div style="font-size:14px;font-weight:600;letter-spacing:0.5px;" id="card-name-display">YOUR NAME</div>
+              </div>
+              <div>
+                <div style="font-size:9px;opacity:0.55;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Expires</div>
+                <div style="font-size:14px;font-weight:600;" id="card-exp-display">MM/YY</div>
+              </div>
+              <div style="font-size:36px;opacity:0.8;">💳</div>
+            </div>
+          </div>
+          <!-- Card Fields -->
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Card Holder Name *</label>
+              <input type="text" id="card-name-inp" placeholder="Name exactly as on card" oninput="document.getElementById('card-name-display').textContent=this.value.toUpperCase()||'YOUR NAME'">
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Card Number *</label>
+              <input type="text" id="card-num-inp" placeholder="1234  5678  9012  3456" maxlength="19" oninput="formatCard(this)" style="font-size:16px;letter-spacing:1px;font-family:monospace;">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiry Date (MM/YY) *</label>
+              <input type="text" id="card-exp-inp" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" style="font-size:15px;letter-spacing:1px;">
+            </div>
+            <div class="form-group">
+              <label>CVV *</label>
+              <input type="password" id="card-cvv-inp" placeholder="•••" maxlength="4" style="font-size:18px;letter-spacing:4px;">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Billing Address</label><input type="text" placeholder="Street address"></div>
+            <div class="form-group"><label>Zip / Postal Code</label><input type="text" placeholder="Postal code"></div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:13px 15px;font-size:12px;color:var(--text-gray);margin-top:4px;line-height:1.7;">
+            🔒 Your card details are encrypted with 256-bit SSL. We do not store card numbers. Payment is processed securely and credited directly to account <strong style="color:var(--olive-dark);">4937242020839963</strong>.
+          </div>
+        </div>
+
+        <!-- ── PayPal FORM ── -->
+        <div class="pay-form-block" id="form-paypal">
+          <div style="background:linear-gradient(135deg,#003087,#009cde);border-radius:14px;padding:20px 24px;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:16px;">
+            <span style="font-size:40px;">🌐</span>
+            <div>
+              <div style="font-size:12px;opacity:0.8;margin-bottom:4px;">Send PayPal Payment to</div>
+              <div style="font-size:20px;font-weight:700;">hello@pixelolive.com</div>
+              <div style="font-size:11px;opacity:0.7;margin-top:2px;">Use "Friends &amp; Family" to avoid fees</div>
+            </div>
+          </div>
+          <div style="background:var(--olive-pale);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text-dark);margin-bottom:16px;line-height:1.8;">
+            <strong>How to Pay via PayPal:</strong><br>
+            1. Log in to PayPal → Send Money<br>
+            2. Enter email: <strong>hello@pixelolive.com</strong><br>
+            3. Select "Friends &amp; Family" (no fees)<br>
+            4. Add note: <strong id="paypal-ref">PO-ORDER</strong><br>
+            5. Enter PayPal Transaction ID below
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>PayPal Transaction ID *</label><input type="text" placeholder="e.g. 7BK24563PR482892B"></div>
+            <div class="form-group"><label>Amount Sent (USD) *</label><input type="number" placeholder="Enter USD amount"></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group"><label>Your PayPal Email</label><input type="email" placeholder="your@paypal.com"></div>
+          </div>
+        </div>
+
+      </div><!-- end payment methods form-section -->
+
+      <!-- TOTAL & SUBMIT -->
+      <div class="pay-total">
+        <div>
+          <div class="label">Total Project Cost</div>
+          <div style="font-size:12px;opacity:0.6;margin-top:2px;">50% advance required to begin</div>
+        </div>
+        <div class="amount" id="pay-total-display">$1,299</div>
+      </div>
+      <div style="background:var(--olive-pale);border-radius:10px;padding:14px;font-size:13px;color:var(--text-dark);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+        <span>50% Advance Due Now:</span>
+        <strong id="pay-advance-display" style="color:var(--olive-dark);font-size:16px;">$650</strong>
+      </div>
+      <button class="pay-submit" onclick="submitPayment()">✓ Confirm Order &amp; Complete Payment</button>
+      <div class="pay-secure" style="margin-top:12px;text-align:center;">
+        🔒 All payments credited directly to Account <strong style="color:var(--olive-dark);">4937242020839963</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT PAGE ============ -->
+<div id="page-contact" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Contact Us</div>
+    <h1 class="section-title">Let's Talk</h1>
+    <p>Have a project in mind? A question? Or just want to say hello? We'd love to hear from you.</p>
+  </div>
+  <div class="contact-page">
+    <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p>We're a friendly, passionate team ready to help you build something amazing. Reach out through any channel that's convenient for you.</p>
+      <div class="contact-items">
+        <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-label">Phone</div><div class="ci-value">+8801971989219</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📧</div><div><div class="ci-label">Email</div><div class="ci-value">hello@pixelolive.com</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-label">Location</div><div class="ci-value">Dhaka, Bangladesh</div></div></div>
+        <div class="ci-item"><div class="ci-icon">⏰</div><div><div class="ci-label">Working Hours</div><div class="ci-value">Sat–Thu, 10AM–8PM (BST)</div></div></div>
+      </div>
+      <div class="social-links">
+        <a class="social-link" title="WhatsApp">💬</a>
+        <a class="social-link" title="Facebook">📘</a>
+        <a class="social-link" title="LinkedIn">💼</a>
+        <a class="social-link" title="Instagram">📸</a>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn btn-primary" onclick="openCallModal()" style="width:100%;">📞 Schedule a Free Call</button>
+      </div>
+    </div>
+    <div class="contact-form-box">
+      <h3>Send Us a Message</h3>
+      <div class="cf-group"><label>Full Name *</label><input type="text" placeholder="Your full name"></div>
+      <div class="cf-group"><label>Email Address *</label><input type="email" placeholder="you@email.com"></div>
+      <div class="cf-group"><label>Phone Number</label><input type="tel" placeholder="+880 1700 000000"></div>
+      <div class="cf-group"><label>Subject</label><select><option>General Inquiry</option><option>Website Making</option><option>Web Development</option><option>UI/UX Design</option><option>Pricing &amp; Quote</option><option>Support</option></select></div>
+      <div class="cf-group"><label>Message *</label><textarea placeholder="Tell us about your project or ask us anything..."></textarea></div>
+      <button class="cf-submit" onclick="submitContact()">Send Message →</button>
+      <div class="success-msg" id="contact-success"><p>✅ Message sent! We'll get back to you within 24 hours.</p></div>
+    </div>
+  </div>
+  <div class="map-section">
+    <div class="map-box">📍 Dhaka, Bangladesh — Available for remote projects worldwide</div>
+  </div>
+  <div id="contact-footer"></div>
+</div>
+
+<!-- ============ QUOTE PAGE ============ -->
+<div id="page-quote" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Get a Quote</div>
+    <h1 class="section-title">Tell Us About Your Project</h1>
+    <p>Fill out the form and we'll send you a detailed, custom quote within 24 hours — completely free.</p>
+  </div>
+  <div class="quote-page">
+    <div class="quote-info">
+      <h2>Why Get a Quote?</h2>
+      <p>Every project is unique. A custom quote ensures you get exactly what you need — no more, no less — at the right price for your budget.</p>
+      <div class="quote-benefits">
+        <div class="qb"><div class="qb-dot">⚡</div><div><h5>Free &amp; No-Obligation</h5><p>Our quotes are 100% free with no pressure to commit.</p></div></div>
+        <div class="qb"><div class="qb-dot">📋</div><div><h5>Detailed Breakdown</h5><p>Full breakdown of costs, timelines, and deliverables.</p></div></div>
+        <div class="qb"><div class="qb-dot">🎯</div><div><h5>Tailored to You</h5><p>Your quote is custom-built for your specific requirements.</p></div></div>
+        <div class="qb"><div class="qb-dot">⏱️</div><div><h5>24-Hour Response</h5><p>We respond to all quote requests within one business day.</p></div></div>
+      </div>
+    </div>
+    <div class="quote-form-box">
+      <h3>Project Details</h3>
+      <div class="qf-row"><div class="qf-group"><label>Full Name *</label><input type="text" placeholder="Your name"></div><div class="qf-group"><label>Email *</label><input type="email" placeholder="you@email.com"></div></div>
+      <div class="qf-row"><div class="qf-group"><label>Phone</label><input type="tel" placeholder="+880..."></div><div class="qf-group"><label>Company</label><input type="text" placeholder="Optional"></div></div>
+      <div style="margin-bottom:14px;"><label style="display:block;font-size:13px;font-weight:500;color:var(--text-dark);margin-bottom:10px;">Services Needed *</label>
+        <div class="service-checkboxes">
+          <div class="svc-check" onclick="toggleCheck(this)"><div class="chk"></div><span>🌐 Website Making</span></div>
+          <div class="svc-check" onclick="toggleCheck(this)"><div class="chk"></div><span>⚙️ Web Development</span></div>
+          <div class="svc-check" onclick="toggleCheck(this)"><div class="chk"></div><span>🎨 UI/UX Design</span></div>
+          <div class="svc-check" onclick="toggleCheck(this)"><div class="chk"></div><span>🛒 E-Commerce</span></div>
+        </div>
+      </div>
+      <div class="qf-row"><div class="qf-group"><label>Budget Range</label><select><option>Under $500</option><option>$500 – $1,000</option><option>$1,000 – $3,000</option><option>$3,000 – $10,000</option><option>$10,000+</option></select></div><div class="qf-group"><label>Timeline</label><select><option>ASAP</option><option>1–2 weeks</option><option>2–4 weeks</option><option>1–2 months</option><option>Flexible</option></select></div></div>
+      <div class="qf-row full"><div class="qf-group"><label>Project Description *</label><textarea placeholder="Describe your project in as much detail as possible."></textarea></div></div>
+      <button class="qf-submit" onclick="submitQuote()">Submit Quote Request →</button>
+    </div>
+  </div>
+  <div id="quote-footer"></div>
+</div>
+
+<!-- ============ PRIVACY POLICY PAGE ============ -->
+<div id="page-privacy" class="page">
+  <div class="page-hero">
+    <div class="section-tag">Legal</div>
+    <h1 class="section-title">Privacy Policy</h1>
+    <p>We are committed to protecting your personal information and your right to privacy.</p>
+  </div>
+  <div style="padding:60px 5%;background:var(--white);">
+  <div class="privacy-page">
+    <p class="last-updated">Last updated: January 1, 2026 · PixelOlive Studio, Dhaka, Bangladesh</p>
+
+    <div class="privacy-highlight">
+      By using our website or services, you agree to the terms described in this Privacy Policy. We encourage you to read it carefully.
+    </div>
+
+    <div class="privacy-section">
+      <h2>1. Information We Collect</h2>
+      <p>When you interact with PixelOlive — through our website, contact forms, quote requests, or payment pages — we may collect the following types of information:</p>
+      <ul>
+        <li><strong>Personal Identification:</strong> Full name, email address, phone number, company name.</li>
+        <li><strong>Payment Information:</strong> Transaction IDs, mobile banking numbers, bank transfer references. We do not store full card numbers on our servers.</li>
+        <li><strong>Project Details:</strong> Descriptions, requirements, timelines, and budgets shared via our forms.</li>
+        <li><strong>Technical Data:</strong> IP address, browser type, device type, and pages visited (via analytics tools).</li>
       </ul>
-      <a href="#" class="p-btn outline">Contact Us</a>
     </div>
-  </div>
-</section>
 
-<section class="testimonials">
-  <div class="section-tag">Client Stories</div>
-  <h2 class="section-title">What Our Clients Say</h2>
-  <div class="t-grid">
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <blockquote>"PixelOlive transformed our outdated website into a modern masterpiece. Traffic doubled within the first month!"</blockquote>
-      <div class="t-author">
-        <div class="t-avatar">AR</div>
-        <div><div class="t-name">Arif Rahman</div><div class="t-role">CEO, TechBD</div></div>
+    <div class="privacy-section">
+      <h2>2. How We Use Your Information</h2>
+      <p>The information we collect is used solely to provide and improve our services. Specifically, we use your data to:</p>
+      <ul>
+        <li>Process your project inquiries, quotes, and orders.</li>
+        <li>Communicate with you about your project, timeline, and deliverables.</li>
+        <li>Verify payments and issue receipts or confirmations.</li>
+        <li>Improve our website experience and service quality.</li>
+        <li>Send relevant updates or follow-ups related to your project.</li>
+        <li>Comply with legal obligations where applicable.</li>
+      </ul>
+    </div>
+
+    <div class="privacy-section">
+      <h2>3. Payment & Financial Data</h2>
+      <p>All payments made through our platform are processed and credited directly to our verified merchant account number <strong>4937242020839963</strong> (Dutch Bangla Bank — PixelOlive Studio).</p>
+      <p>For card payments, all data is encrypted with 256-bit SSL encryption. We do not store, log, or retain full card numbers on our servers. Mobile payment transaction IDs (bKash, Nagad, Rocket) are stored only for order verification and reconciliation purposes.</p>
+      <div class="privacy-highlight">
+        🔒 We will never share your financial data with third parties for marketing or advertising purposes.
       </div>
     </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <blockquote>"Their design team nailed our brand perfectly. The process was smooth, communication was excellent throughout."</blockquote>
-      <div class="t-author">
-        <div class="t-avatar">SJ</div>
-        <div><div class="t-name">Sarah James</div><div class="t-role">Founder, StyleHub</div></div>
-      </div>
+
+    <div class="privacy-section">
+      <h2>4. Data Sharing & Third Parties</h2>
+      <p>We do not sell, trade, or rent your personal information to third parties. We may share data only in the following limited circumstances:</p>
+      <ul>
+        <li><strong>Service Providers:</strong> Tools such as Google Analytics, email services, or hosting providers that help us operate our business. These parties are bound by confidentiality agreements.</li>
+        <li><strong>Legal Requirements:</strong> If required by law, court order, or governmental authority, we may disclose information as legally obligated.</li>
+        <li><strong>Business Transfer:</strong> In the event of a merger or acquisition, user data may be transferred to the successor entity under the same privacy protections.</li>
+      </ul>
     </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <blockquote>"Our e-commerce sales increased by 40% after launching the new site. Best investment we've made this year."</blockquote>
-      <div class="t-author">
-        <div class="t-avatar">MH</div>
-        <div><div class="t-name">Mehedi Hasan</div><div class="t-role">Director, ShopDhaka</div></div>
+
+    <div class="privacy-section">
+      <h2>5. Cookies & Tracking</h2>
+      <p>Our website may use cookies and similar tracking technologies to enhance your browsing experience. Cookies help us remember your preferences and analyze site traffic. You may disable cookies in your browser settings; however, some features of our website may not function correctly without them.</p>
+      <p>We use Google Analytics to understand how visitors interact with our site. This data is aggregated and anonymized — it does not personally identify you.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>6. Data Retention</h2>
+      <p>We retain your personal data only as long as necessary to fulfill the purposes outlined in this policy, or as required by law. Project-related data is typically retained for up to 3 years for record-keeping and dispute resolution purposes. You may request deletion of your data at any time by contacting us.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>7. Your Rights</h2>
+      <p>You have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of the data we hold about you.</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate or incomplete data.</li>
+        <li><strong>Deletion:</strong> Request deletion of your personal data ("right to be forgotten").</li>
+        <li><strong>Restriction:</strong> Request that we limit how we use your data.</li>
+        <li><strong>Objection:</strong> Object to our processing of your data for specific purposes.</li>
+      </ul>
+      <p>To exercise any of these rights, please contact us at <strong>hello@pixelolive.com</strong>.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>8. Security</h2>
+      <p>We implement industry-standard technical and organizational measures to protect your personal information against unauthorized access, loss, or misuse. Our payment pages use SSL/TLS encryption, and access to personal data is restricted to authorized personnel only.</p>
+      <p>While we take all reasonable precautions, no method of data transmission over the internet is 100% secure. We encourage you to use strong passwords and to not share your login credentials with anyone.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>9. Children's Privacy</h2>
+      <p>Our services are not directed at individuals under the age of 16. We do not knowingly collect personal information from children. If you believe we have inadvertently collected data from a minor, please contact us immediately and we will delete it promptly.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>10. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices or legal obligations. We will notify users of significant changes by updating the "Last updated" date at the top of this page. Your continued use of our services after any changes constitutes your acceptance of the updated policy.</p>
+    </div>
+
+    <div class="privacy-contact-box">
+      <div class="icon">📬</div>
+      <div>
+        <h4>Questions about your privacy?</h4>
+        <p>Contact our privacy team at <strong>hello@pixelolive.com</strong> or call us at <strong>+8801971989219</strong>. We respond within 48 hours.</p>
+        <button class="btn btn-primary" onclick="go('contact')" style="margin-top:14px;padding:10px 22px;font-size:14px;">Contact Us</button>
       </div>
     </div>
   </div>
-</section>
-
-<section class="cta-section">
-  <h2>Ready to Build Something Great?</h2>
-  <p>Let's turn your vision into a stunning, high-performing website — starting today.</p>
-  <div class="cta-btns">
-    <a href="#" class="btn-white">Start Your Project</a>
-    <a href="#" class="btn-outline-white">Schedule a Free Call</a>
   </div>
-</section>
+  <div id="privacy-footer"></div>
+</div>
 
+<!-- SHARED FOOTER TEMPLATE -->
+<template id="footer-tpl">
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <div class="logo">Pixel<span>Olive</span></div>
-      <p>Crafting beautiful websites and digital experiences for businesses worldwide since 2019.</p>
+      <p>Crafting beautiful websites and digital experiences for businesses worldwide since 2025.</p>
     </div>
-    <div class="footer-col">
-      <h5>Services</h5>
-      <ul>
-        <li><a href="#">Website Making</a></li>
-        <li><a href="#">Web Development</a></li>
-        <li><a href="#">UI/UX Design</a></li>
-        <li><a href="#">E-Commerce</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Company</h5>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Careers</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Contact</h5>
-      <ul>
-        <li><a href="#">hello@pixelolive.com</a></li>
-        <li><a href="#">+880 1971989219</a></li>
-        <li><a href="#">Dhaka, Bangladesh</a></li>
-        <li><a href="#">WhatsApp</a></li>
-      </ul>
-    </div>
+    <div class="footer-col"><h5>Services</h5><ul>
+      <li><a onclick="go('service-website')">Website Making</a></li>
+      <li><a onclick="go('service-dev')">Web Development</a></li>
+      <li><a onclick="go('service-design')">UI/UX Design</a></li>
+      <li><a onclick="go('quote')">Get a Quote</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Company</h5><ul>
+      <li><a onclick="go('portfolio')">Portfolio</a></li>
+      <li><a onclick="go('pricing')">Pricing</a></li>
+      <li><a onclick="go('contact')">Contact</a></li>
+      <li><a onclick="openCallModal()">Free Call</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Legal</h5><ul>
+      <li><a onclick="go('privacy')">Privacy Policy</a></li>
+      <li><a onclick="go('privacy')">Terms of Service</a></li>
+      <li><a>hello@pixelolive.com</a></li>
+      <li><a href="tel:+8801971989219">+8801971989219</a></li>
+    </ul></div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 PixelOlive. All rights reserved.</p>
-    <p>Privacy Policy · Terms of Service</p>
+    <div class="footer-bottom-links">
+      <a onclick="go('privacy')">Privacy Policy</a>
+      <a onclick="go('privacy')">Terms of Service</a>
+      <a onclick="go('contact')">Contact</a>
+    </div>
   </div>
 </footer>
+</template>
 
+<script>
+// INJECT FOOTERS
+['home','services','sw','sd','sdes','port','pricing','contact','quote','privacy'].forEach(id=>{
+  const el=document.getElementById(id+'-footer');
+  if(el){el.innerHTML=document.getElementById('footer-tpl').innerHTML;}
+});
+
+// PAGE NAVIGATION
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active-nav'));
+  const pg=document.getElementById('page-'+page);
+  if(pg){pg.classList.add('active');}
+  const navMap={
+    home:'nl-home',services:'nl-services',pricing:'nl-pricing',
+    portfolio:'nl-portfolio',contact:'nl-contact',
+    'service-website':'nl-services','service-dev':'nl-services',
+    'service-design':'nl-services',payment:'nl-pricing',
+    quote:'nl-home',privacy:'nl-contact'
+  };
+  const navEl=document.getElementById(navMap[page]);
+  if(navEl)navEl.classList.add('active-nav');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// CALL MODAL
+function openCallModal(){document.getElementById('call-modal').classList.add('open');}
+function closeModal(){document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)closeModal();}));
+
+// PLAN DATA
+const planData={
+  'Starter — Basic Website':{price:'$499',amount:'499',advance:'$250',features:['Up to 5 pages','Responsive design','Contact form','Basic SEO setup','1 month support']},
+  'Starter':{price:'$499',amount:'499',advance:'$250',features:['Up to 5 pages','Responsive design','Contact form','Basic SEO setup','1 month support']},
+  'Professional':{price:'$1,299',amount:'1299',advance:'$650',features:['Up to 15 pages','Custom UI/UX design','CMS integration','Advanced SEO','E-commerce ready','3 months support']},
+  'Website Making':{price:'$499+',amount:'499',advance:'$250',features:['Custom website','Responsive design','SEO optimization','Contact form','1 month support']},
+  'Web Development':{price:'$1,299+',amount:'1299',advance:'$650',features:['Custom web app','React/Next.js frontend','Backend & API','Database setup','3 months support']},
+  'UI/UX Design':{price:'$499+',amount:'499',advance:'$250',features:['User research','Wireframes','Visual design','Figma prototype','Brand guidelines']},
+};
+
+function openPayment(planName,price,amount){
+  const data=planData[planName]||{price:price,amount:amount,advance:'$'+Math.round(parseInt(amount)/2),features:['Custom project','Tailored solution','Professional delivery','Support included']};
+  document.getElementById('pay-plan-name').textContent=planName;
+  document.getElementById('pay-plan-price').innerHTML=data.price+' <span>/ project</span>';
+  document.getElementById('pay-total-display').textContent=data.price;
+  document.getElementById('pay-advance-display').textContent=data.advance;
+  const feats=document.getElementById('pay-features');
+  feats.innerHTML=data.features.map(f=>'<li>'+f+'</li>').join('');
+  // Set order reference codes
+  const ref='PO-'+Date.now().toString().slice(-6);
+  ['bkash-ref','nagad-ref','paypal-ref'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=ref;});
+  // Reset to bKash by default
+  document.querySelectorAll('.pay-form-block').forEach(f=>f.classList.remove('active'));
+  document.getElementById('form-bkash').classList.add('active');
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('selected'));
+  document.querySelector('.pay-method[data-method="bkash"]').classList.add('selected');
+  go('payment');
+}
+
+// SELECT PAYMENT METHOD — shows the matching form
+function selectMethod(el, method){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('selected'));
+  el.classList.add('selected');
+  document.querySelectorAll('.pay-form-block').forEach(f=>f.classList.remove('active'));
+  const block=document.getElementById('form-'+method);
+  if(block)block.classList.add('active');
+}
+
+// CARD FORMATTING
+function formatCard(input){
+  let v=input.value.replace(/\D/g,'').substring(0,16);
+  let f='';
+  for(let i=0;i<v.length;i++){if(i>0&&i%4===0)f+=' ';f+=v[i];}
+  input.value=f;
+  const pad=v.padEnd(16,'•');
+  document.getElementById('card-display').textContent=
+    pad.substring(0,4)+' '+pad.substring(4,8)+' '+pad.substring(8,12)+' '+pad.substring(12,16);
+}
+
+function formatExpiry(input){
+  let v=input.value.replace(/\D/g,'').substring(0,4);
+  if(v.length>=3)v=v.substring(0,2)+'/'+v.substring(2);
+  input.value=v;
+  document.getElementById('card-exp-display').textContent=v||'MM/YY';
+}
+
+// SUBMIT HANDLERS
+function submitPayment(){
+  document.getElementById('success-modal').classList.add('open');
+}
+function submitContact(){
+  document.getElementById('contact-success').classList.add('show');
+  setTimeout(()=>document.getElementById('contact-success').classList.remove('show'),5000);
+}
+function submitQuote(){document.getElementById('quote-modal').classList.add('open');}
+
+// PORTFOLIO FILTER
+function filterPort(btn,cat){
+  document.querySelectorAll('.port-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.port-item').forEach(item=>{
+    item.style.display=(cat==='all'||item.dataset.cat===cat)?'block':'none';
+  });
+}
+
+// FAQ TOGGLE
+function toggleFaq(el){
+  const ans=el.nextElementSibling;
+  const icon=el.querySelector('span:last-child');
+  if(ans.classList.contains('open')){
+    ans.classList.remove('open');icon.textContent='+';
+  } else {
+    document.querySelectorAll('.faq-a.open').forEach(a=>{
+      a.classList.remove('open');
+      a.previousElementSibling.querySelector('span:last-child').textContent='+';
+    });
+    ans.classList.add('open');icon.textContent='−';
+  }
+}
+
+// SERVICE CHECKBOX
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  el.querySelector('.chk').textContent=el.classList.contains('checked')?'✓':'';
+}
+
+// INIT
+go('home');
+</script>
 </body>
 </html>
